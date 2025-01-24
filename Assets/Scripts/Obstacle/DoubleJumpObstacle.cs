@@ -2,15 +2,7 @@ using UnityEngine;
 
 public class DoubleJumpObsttacle : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public float jumpPadForce = 15f; // La force appliquée par le JumpPad
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+  
 }
