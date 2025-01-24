@@ -81,6 +81,7 @@ public class DatabaseManager : MonoBehaviour
         {
             await Task.Delay(100);
         }
+
         List<User> users = new List<User>();
 
         if (m_database == null)
@@ -92,14 +93,27 @@ public class DatabaseManager : MonoBehaviour
         try
         {
             DataSnapshot snapshot = await m_database.Child("users").GetValueAsync();
-            foreach (DataSnapshot userSnapshot in snapshot.Children)
+            if (snapshot.Exists)
             {
-                string userID = userSnapshot.Key;
-                foreach (DataSnapshot user in userSnapshot.Children)
+                foreach (DataSnapshot userIdSnap in snapshot.Children)
                 {
-                    User userData = JsonUtility.FromJson<User>(user.GetRawJsonValue());
-                    users.Add(userData);
+                    foreach (DataSnapshot userDataSnap in userIdSnap.Children)
+                    {
+                        string rawJson = userDataSnap.GetRawJsonValue();
+                        if (!string.IsNullOrEmpty(rawJson) && rawJson.Contains("{"))
+                        {
+                            User userData = JsonUtility.FromJson<User>(rawJson);
+                            if (userData != null)
+                            {
+                                users.Add(userData);
+                            }
+                        }
+                    }
                 }
+            }
+            else
+            {
+                Debug.LogWarning("No data found in the 'users' node.");
             }
         }
         catch (Exception e)
@@ -109,6 +123,10 @@ public class DatabaseManager : MonoBehaviour
 
         return users;
     }
+
+
+
+
 
     
 }
