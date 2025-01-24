@@ -130,4 +130,20 @@ public class ScrollManager : MonoBehaviour
                 break;
         }
     }
+
+    public void AdjustObjectsAfterTeleport(float offset)
+    {
+        Debug.Log("Adujst");
+        // Récupère tous les objets défilants dans la scène
+        ScrollableObject[] scrollableObjects = FindObjectsOfType<ScrollableObject>();
+        foreach (var obj in scrollableObjects)
+        {
+
+            // Ajuste leur position en fonction du décalage
+            obj.AdjustPosition(offset);
+        }
+
+        // Réinitialise la distance défilée
+        resetDistance();
+    }
 }
