@@ -6,7 +6,8 @@ public class PlayerController : MonoBehaviour
 {
 
     public int score;
-    public int levelPosition = 0; 
+    public int levelPosition = 0;
+    public AudioSource explosionSource;
 
     [Header("Mouvement du Personnage")]
     public float jumpForce = 10f; // Force du saut
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded && !isSliding)
         {
             Jump(jumpForce); // Saut normal
+            explosionSource.Play();
         }
         // Double saut
         else if (Input.GetKeyDown(KeyCode.UpArrow) && !isGrounded && canDoubleJump && !isSliding)
