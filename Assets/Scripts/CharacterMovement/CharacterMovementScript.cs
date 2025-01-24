@@ -61,19 +61,19 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded && !isSliding)
         {
             Jump(jumpForce); // Saut normal
-            explosionSource.Play();
+            //explosionSource.Play();
         }
         // Double saut
-        //else if (Input.GetKeyDown(KeyCode.UpArrow) && !isGrounded && canDoubleJump && !isSliding)
-        //{
-        //    DoubleJump(jumpForce); // Double saut
-        //}
+         if (Input.GetKeyDown(KeyCode.UpArrow) && !isGrounded && canDoubleJump && !isSliding)
+        {
+            DoubleJump(jumpForce); // Double saut
+        }
 
         //// Glissade
-        //if (Input.GetKeyDown(KeyCode.DownArrow) && canSlide && !isSliding)
-        //{
-        //    StartCoroutine(Slide());
-        //}
+        if (Input.GetKeyDown(KeyCode.DownArrow) && canSlide && !isSliding)
+        {
+            StartCoroutine(Slide());
+        }
 
         // Score 
         if (ScrollManager.instance != null)
@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
     {
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, force); // Utilisation de rb.velocity pour appliquer la force du saut
         animator.SetTrigger("Jump");
-        canDoubleJump = true; // Permet un double saut après un saut normal
+        
     }
 
     // Double saut
@@ -96,6 +96,7 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, force); // Applique la force du double saut
         animator.SetTrigger("DoubleJump");
         canDoubleJump = false; // Désactive le double saut après utilisation
+        
     }
 
     private IEnumerator ResetScale(Vector3 originalScale, float delay)
