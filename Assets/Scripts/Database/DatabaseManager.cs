@@ -52,7 +52,13 @@ public class DatabaseManager : MonoBehaviour
         }
 
         //TODO: Récupérer le score du joueur
-        int _score = 0; 
+        int _score = 0;
+
+        if (ScrollManager.instance != null)
+        {
+            _score = Mathf.FloorToInt(ScrollManager.instance.distanceScrolled);
+            //distanceText.text = Mathf.FloorToInt(distance).ToString() + " m";
+        }
 
         //TODO: Récupérer les notes du joueur
         bool _note1 = false;
