@@ -6,6 +6,7 @@ public class SpeedManager : MonoBehaviour
     public static SpeedManager instance;
     [SerializeField]
     public float speed = 1.0f;
+    private float audioLength = 28.44f;
 
     private void Awake()
     {
