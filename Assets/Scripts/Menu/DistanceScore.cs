@@ -1,12 +1,16 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using TMPro;
+
 
 public class DistanceScore : MonoBehaviour
 {
     
-    public Text distanceText;
+    public TMP_Text distanceText;
     public float distance;
+    private PlayerController player;
+
 
     void Start()
     {
@@ -22,11 +26,21 @@ public class DistanceScore : MonoBehaviour
 
     void UpdateDistanceText()
     {
-        //distanceText.text = Mathf.FloorToInt(distance).ToString() + " m";
         if (ScrollManager.instance != null)
         {
-            distance = ScrollManager.instance.distanceScrolled;
-            distanceText.text = Mathf.FloorToInt(distance).ToString() + " m";
+            //distance = ScrollManager.instance.distanceScrolled;
+            //distanceText.text = Mathf.FloorToInt(distance).ToString() + " m";
+
+            GameObject playerObject = GameObject.FindWithTag("Player");
+
+            if (playerObject != null)
+            {
+                player = playerObject.GetComponent<PlayerController>();
+                if (player != null)
+                {
+                    distanceText.text = player.score.ToString() + " m";
+                }
+            }
         }
     }
 

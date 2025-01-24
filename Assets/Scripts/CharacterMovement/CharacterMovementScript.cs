@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
+    public int score; 
+
     [Header("Mouvement du Personnage")]
     public float jumpForce = 10f; // Force du saut
     public float secondJumpForce = 8f; // Force du deuxième saut (si nécessaire, peut être différente)
@@ -60,6 +63,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.DownArrow) && canSlide && !isSliding)
         {
             StartCoroutine(Slide());
+        }
+
+        // Score 
+        if (ScrollManager.instance != null)
+        {
+            score = Mathf.FloorToInt(ScrollManager.instance.distanceScrolled);
         }
     }
 

@@ -16,6 +16,7 @@ public class DatabaseManager : MonoBehaviour
     private DatabaseReference m_database;
 
     private bool m_isLoaded = false;
+    private PlayerController player;
 
     void Start()
     {
@@ -54,10 +55,15 @@ public class DatabaseManager : MonoBehaviour
         //TODO: Récupérer le score du joueur
         int _score = 0;
 
-        if (ScrollManager.instance != null)
+        GameObject playerObject = GameObject.FindWithTag("Player");
+
+        if (playerObject != null)
         {
-            _score = Mathf.FloorToInt(ScrollManager.instance.distanceScrolled);
-            //distanceText.text = Mathf.FloorToInt(distance).ToString() + " m";
+            player = playerObject.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                _score = player.score; // Récupérer le score
+            }
         }
 
         //TODO: Récupérer les notes du joueur
