@@ -178,6 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a3edcf09c913d746a2f41175326ced0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 0
   jumpForce: 30
   secondJumpForce: 8
   slideDuration: 0.5

@@ -10,7 +10,7 @@ public class LeaderboardManager : MonoBehaviour
     private List<User> m_users;
     private TextMeshProUGUI[] m_textComponents;
 
-    async void Start ()
+    void Start ()
     {
         m_databaseManager = FindAnyObjectByType<DatabaseManager>();
         if(m_databaseManager == null)
@@ -18,23 +18,27 @@ public class LeaderboardManager : MonoBehaviour
             Debug.LogError("Database Manager is null.");
             return;
         }
-        m_users = await m_databaseManager.GetAllUsersAsync();
         ReloadLeaderboard();
     }
 
-    async void OnEnable ()
+    void OnEnable ()
     {
+        if(m_databaseManager == null)
+        {
+            m_databaseManager = FindAnyObjectByType<DatabaseManager>();
+        }
+        
         if(m_databaseManager == null)
         {
             Debug.LogError("Database Manager is null.");
             return;
         }
-        m_users = await m_databaseManager.GetAllUsersAsync();
         ReloadLeaderboard();
     }
 
-    void ReloadLeaderboard()
+    async void ReloadLeaderboard()
     {
+        m_users = await m_databaseManager.GetAllUsersAsync();
         m_textComponents = GetComponentsInChildren<TextMeshProUGUI>();
         string userID = SystemInfo.deviceUniqueIdentifier;
         // Sort users by score in descending order

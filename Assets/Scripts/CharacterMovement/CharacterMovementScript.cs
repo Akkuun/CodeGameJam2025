@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
+    public int score;
+    public int levelPosition = 0;
+    public AudioSource explosionSource;
+
     [Header("Mouvement du Personnage")]
     public float jumpForce = 10f; // Force du saut
     public float secondJumpForce = 8f; // Force du deuxième saut (si nécessaire, peut être différente)
@@ -38,6 +43,7 @@ public class PlayerController : MonoBehaviour
         previousY[0] = transform.position.y;
         previousY[1] = float.MaxValue;
         gameManager = ScrollManager.instance;
+        levelPosition = 0;
     }
 
     void Update()
@@ -55,6 +61,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded && !isSliding)
         {
             Jump(jumpForce); // Saut normal
+            explosionSource.Play();
         }
         // Double saut
         else if (Input.GetKeyDown(KeyCode.UpArrow) && !isGrounded && canDoubleJump && !isSliding)
@@ -66,6 +73,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.DownArrow) && canSlide && !isSliding)
         {
             StartCoroutine(Slide());
+        }
+
+        // Score 
+        if (ScrollManager.instance != null)
+        {
+            score = Mathf.FloorToInt(ScrollManager.instance.distanceScrolled);
         }
     }
 
