@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-    public int score; 
+    public int score;
+    public int levelPosition = 0; 
 
     [Header("Mouvement du Personnage")]
     public float jumpForce = 10f; // Force du saut
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
         previousY = new float[2];
         previousY[0] = transform.position.y;
         previousY[1] = float.MaxValue;
+        levelPosition = 0;
     }
 
     void Update()
