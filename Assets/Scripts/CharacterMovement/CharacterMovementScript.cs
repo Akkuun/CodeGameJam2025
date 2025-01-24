@@ -4,18 +4,21 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Mouvement du Personnage")]
-    public float jumpForce = 10f;      // Force du saut
-    public float slideDuration = 0.5f; // Dur�e de la glissade
-    public float groundCheckRadius = 0.2f; // Rayon pour v�rifier le sol
-    public LayerMask groundLayer;     // Couche pour d�tecter le sol
+    public float jumpForce = 10f; // Force du saut
+    public float slideDuration = 0.5f; // Durée de la glissade
+    public float breakableCheckRadius = 0.2f; // Rayon pour vérifier le sol
+    public float objectDetectionDistance = 1f; // Distance horizontale de détection des objets
 
     [Header("References")]
-    public Transform groundCheck; // Point sous le personnage pour verifier le sol
+    public Transform groundCheck; // Point pour vérifier si le personnage est au sol
+    public LayerMask groundLayer; // Couche utilisée pour détecter le sol
+    public Transform breakableDetector; // Point pour détecter les objets devant
     public BoxCollider2D normalCollider; // Collider standard du personnage
 
     private Rigidbody2D rb;
     private Animator animator;
     private bool isSliding = false;
+    private bool isGrounded = false; // Indique si le personnage est au sol
 
     void Start()
     {
@@ -25,26 +28,35 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        // Met à jour l'état d'être au sol
+        isGrounded = IsGrounded();
+
         // Saut
-        if (Input.GetButtonDown("Jump") && IsGrounded() && !isSliding)
+        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded && !isSliding)
         {
+            print("Jump");
+            print("isGrounded" + isGrounded);
             Jump();
         }
 
         // Glissade
-        if (Input.GetKeyDown(KeyCode.S) && IsGrounded() && !isSliding)
+        if (Input.GetKeyDown(KeyCode.DownArrow) && isGrounded && !isSliding)
         {
-            StartCoroutine(Slide());
+            if (IsObjectInFront("Breakable"))
+            {
+                StartCoroutine(Slide());
 
-            // Change temporairement le scale en Y du personnage pour le réduire
-            Vector3 originalScale = transform.localScale;
-            transform.localScale = new Vector3(originalScale.x, originalScale.y * 0.5f, originalScale.z);
+                // Change temporairement le scale en Y du personnage pour le réduire
+                Vector3 originalScale = transform.localScale;
+                transform.localScale = new Vector3(originalScale.x, originalScale.y * 0.5f, originalScale.z);
 
-            // Restaure le scale après la durée de la glissade
-            StartCoroutine(ResetScale(originalScale, slideDuration));
+                // Restaure le scale après la durée de la glissade
+                StartCoroutine(ResetScale(originalScale, slideDuration));
+            }
         }
     }
 
+    // Méthode de saut
     void Jump()
     {
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
@@ -59,13 +71,12 @@ public class PlayerController : MonoBehaviour
         transform.localScale = originalScale;
     }
 
-
     IEnumerator Slide()
     {
         isSliding = true;
         animator.SetTrigger("Slide");
 
-        // R�duire temporairement la taille du collider pour simuler la glissade
+        // Réduit temporairement la taille du collider pour simuler la glissade
         Vector2 originalSize = normalCollider.size;
         Vector2 originalOffset = normalCollider.offset;
 
@@ -74,7 +85,7 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(slideDuration);
 
-        // Restaurer le collider
+        // Restaure le collider
         normalCollider.size = originalSize;
         normalCollider.offset = originalOffset;
 
@@ -83,18 +94,29 @@ public class PlayerController : MonoBehaviour
 
     bool IsGrounded()
     {
-        // V�rifie si le personnage touche le sol
-        Collider2D hit = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        // Vérifie si le personnage est en contact avec le sol
+        Collider2D hit = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
         return hit != null;
+    }
+
+    bool IsObjectInFront(string tag)
+    {
+        // Raycast vers l'avant pour détecter un objet avec le tag spécifié
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, objectDetectionDistance);
+        if (hit.collider != null && hit.collider.CompareTag(tag))
+        {
+            return true;
+        }
+        return false;
     }
 
     void OnDrawGizmosSelected()
     {
-        // Affiche un cercle dans l'�diteur pour visualiser le point de v�rification du sol
+        // Affiche un cercle dans l'éditeur pour visualiser le point de vérification du sol
         if (groundCheck != null)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+            Gizmos.DrawWireSphere(groundCheck.position, breakableCheckRadius);
         }
     }
 }
