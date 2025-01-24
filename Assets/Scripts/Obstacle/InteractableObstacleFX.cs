@@ -22,7 +22,7 @@ public class InteractableObstacleFX : MonoBehaviour
         m_particleSystem.Clear();
         m_particleSystem.Stop();
     }
-
+    [SerializeField]
     async Task Play()
     {
         if(m_particleSystem == null)
@@ -32,11 +32,15 @@ public class InteractableObstacleFX : MonoBehaviour
         m_particleSystem.Play();
         if(m_playingParticleSystem != null)
         {
-            var velo = m_playingParticleSystem.velocityOverLifetime;
-            float oldValue = velo.x.constant;
-            velo.x = oldValue*1.5f;
-            await Task.Delay(500);
-            velo.x = oldValue;
+            //! Do not work
+            ParticleSystem.VelocityOverLifetimeModule velocityModule = m_playingParticleSystem.velocityOverLifetime;
+            velocityModule.enabled = true;
+
+            velocityModule.xMultiplier *= 8;
+
+            await Task.Delay(1000);
+
+            velocityModule.xMultiplier /= 8;
         }
     
     }

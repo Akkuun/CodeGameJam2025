@@ -4890,7 +4890,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_particleSystem: {fileID: 7870202843288229992}
-  m_playingParticleSystem: {fileID: 0}
+  m_playingParticleSystem: {fileID: 2856026236368297290}
   m_isEasilyTriggerable: 1
 --- !u!1 &6162908989765700901
 GameObject:
@@ -11397,7 +11397,7 @@ ParticleSystem:
     orbitalX:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 7.95
+      scalar: 8
       minScalar: 0
       maxCurve:
         serializedVersion: 2
