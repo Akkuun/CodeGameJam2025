@@ -23,7 +23,7 @@ public class ToggleUI : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(toggleKey)) 
+        if (Input.GetKeyDown(toggleKey))
         {
             isVisible = false;
             textsPanel.SetActive(isVisible);
