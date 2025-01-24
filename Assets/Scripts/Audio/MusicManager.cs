@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 enum MusicStyle {
@@ -35,7 +36,9 @@ public class MusicManager : MonoBehaviour
         foreach(AudioSource audioSource in audioSources)
         {
             audioSource.loop = false;
+            audioSource.playOnAwake = false;
             audioSource.Play();
+            audioSource.volume = 0;
         }
         //introAudioSource.Play();
         scrollManager = ScrollManager.instance;
@@ -65,6 +68,8 @@ public class MusicManager : MonoBehaviour
     }
 
     public void startDebugTrack() {
-        //
+        int ind = UnityEngine.Random.Range(0, audioSources.Length);
+        audioSources[ind].volume = 1;
+        
     }
 }
