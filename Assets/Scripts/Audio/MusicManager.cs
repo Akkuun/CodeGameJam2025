@@ -34,9 +34,10 @@ public class MusicManager : MonoBehaviour
     {
         foreach(AudioSource audioSource in audioSources)
         {
-            audioSource.loop = true;
+            audioSource.loop = false;
+            audioSource.Play();
         }
-        introAudioSource.Play();
+        //introAudioSource.Play();
         scrollManager = ScrollManager.instance;
         //diffCount = 0;
         //diffSum = 0;
@@ -47,10 +48,12 @@ public class MusicManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         elapsedTime += Time.deltaTime;
         float thDistance = scrollManager.getTheoreticalDistance(elapsedTime);
         float realDistance = scrollManager.distanceScrolled;
         float diff = thDistance - realDistance;
+        */
         //diffCount++;
         //diffSum += diff;
         //audioSources[0].time -= diff;
@@ -59,5 +62,9 @@ public class MusicManager : MonoBehaviour
         //     Debug.Log($"Average diff: {diffSum / diffCount}");
         // }
         //Debug.Log($"Theoretical distance: {thDistance} Real distance: {realDistance} Diff : {diff}");
+    }
+
+    public void startDebugTrack() {
+        //
     }
 }
