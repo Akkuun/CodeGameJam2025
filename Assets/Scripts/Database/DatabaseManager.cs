@@ -60,10 +60,10 @@ public class DatabaseManager : MonoBehaviour
         bool _note3 = false;
 
         //Saving the user data
-        User user = new User(m_name.text, _score, _note1, _note2, _note3);
+        User user = new User(m_name.text, m_userID, _score, _note1, _note2, _note3);
         string json = JsonUtility.ToJson(user);
         
-        m_database.Child("users").Child(m_userID).Child(m_name.text).SetRawJsonValueAsync(json).ContinueWith(task => {
+        m_database.Child("users").Child(m_name.text).SetRawJsonValueAsync(json).ContinueWith(task => {
             if (task.IsFaulted)
             {
                 Debug.LogError("Failed to save user data: " + task.Exception);
@@ -94,12 +94,8 @@ public class DatabaseManager : MonoBehaviour
             DataSnapshot snapshot = await m_database.Child("users").GetValueAsync();
             foreach (DataSnapshot userSnapshot in snapshot.Children)
             {
-                string userID = userSnapshot.Key;
-                foreach (DataSnapshot user in userSnapshot.Children)
-                {
-                    User userData = JsonUtility.FromJson<User>(user.GetRawJsonValue());
-                    users.Add(userData);
-                }
+                User userData = JsonUtility.FromJson<User>(userSnapshot.GetRawJsonValue());
+                users.Add(userData);
             }
         }
         catch (Exception e)
