@@ -6,8 +6,6 @@ public class DistanceScore : MonoBehaviour
 {
     
     public Text distanceText;
-    private float distance = 0f;
-    public float speed = 1f; 
 
     void Start()
     {
@@ -16,14 +14,19 @@ public class DistanceScore : MonoBehaviour
 
     void Update()
     {
-        distance += speed * Time.deltaTime;
+        //distance += speed * Time.deltaTime;
 
         UpdateDistanceText();
     }
 
     void UpdateDistanceText()
     {
-        distanceText.text = Mathf.FloorToInt(distance).ToString() + " m";
+        //distanceText.text = Mathf.FloorToInt(distance).ToString() + " m";
+        if (ScrollManager.instance != null)
+        {
+            distance = ScrollManager.instance.distanceScrolled;
+            distanceText.text = Mathf.FloorToInt(distance).ToString() + " m";
+        }
     }
 
     public void ResetDistance()
