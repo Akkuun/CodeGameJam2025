@@ -4,8 +4,10 @@
 TagManager:
   serializedVersion: 3
   tags:
+  - Foreground
   - Ground
   - BreakableObject
+
   layers:
   - Default
   - TransparentFX
