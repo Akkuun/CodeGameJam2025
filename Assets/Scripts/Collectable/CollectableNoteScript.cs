@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
+    [SerializeField] public LevelStyle levelStyle;
     private ScrollManager gameManager;
     void Start()
     {
@@ -14,7 +15,7 @@ public class Collectable : MonoBehaviour
 
         if (player != null)
         {
-            
+            gameManager.setTheme(levelStyle);
         }
     }
 }

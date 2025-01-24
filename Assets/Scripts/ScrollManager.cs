@@ -118,4 +118,16 @@ public class ScrollManager : MonoBehaviour
     public void Scroll() {
         distanceScrolled += speed * Time.deltaTime;
     }
+
+    public void setTheme(LevelStyle style) {
+        switch (style)
+        {
+            case LevelStyle.Modern:
+                break;
+            case LevelStyle.Medieval:
+                break;
+            case LevelStyle.SF:
+                break;
+        }
+    }
 }
