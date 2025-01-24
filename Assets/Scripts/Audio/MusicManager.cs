@@ -33,6 +33,8 @@ public class MusicManager : MonoBehaviour
     }
     void Start()
     {
+        introAudioSource.loop = true;
+        introAudioSource.playOnAwake = true;
         foreach(AudioSource audioSource in audioSources)
         {
             audioSource.loop = false;
@@ -71,5 +73,9 @@ public class MusicManager : MonoBehaviour
         int ind = UnityEngine.Random.Range(0, audioSources.Length);
         audioSources[ind].volume = 1;
         
+    }
+
+    public void startIntroTrack() {
+        introAudioSource.Play();
     }
 }

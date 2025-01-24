@@ -13,12 +13,28 @@ public class ScrollableObject : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        transform.position += Vector3.left * speedManager.GetSpeed() * Time.deltaTime;
+        switch (speedManager.gameState)
+        {
+            case GameState.Title:
+                break;
+            case GameState.Tutorial:
+            case GameState.Game:
+            case GameState.SegmentTransition:
+                Scroll();
+                break;
+            case GameState.GameOver:
+                break;
+        }
+        
         /*
         if (transform.position.x <= destroyX)
         {
             Destroy(gameObject);
         }
         */
+    }
+
+    public void Scroll() {
+        transform.position += Vector3.left * speedManager.GetSpeed() * Time.deltaTime;
     }
 }

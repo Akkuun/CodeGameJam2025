@@ -2,6 +2,14 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
+public enum GameState {
+    Title,
+    Tutorial,
+    Game,
+    SegmentTransition,
+    GameOver,
+}
+
 [CreateAssetMenu(fileName = "SpeedManager", menuName = "Scriptable Objects/SpeedManager")]
 public class ScrollManager : MonoBehaviour
 {
@@ -17,7 +25,7 @@ public class ScrollManager : MonoBehaviour
     private float audioLength = 56.904f;
     public float distanceScrolled { get; private set; }
     // public float elapsedTime { get; private set; }
-
+    public GameState gameState = GameState.Title;
 
     private void Awake()
     {
@@ -70,8 +78,23 @@ public class ScrollManager : MonoBehaviour
 
     public void Update()
     {
-        //elapsedTime += Time.deltaTime;
-        distanceScrolled += speed * Time.deltaTime;
+        switch (gameState)
+        {
+            case GameState.Title:
+                break;
+            case GameState.Tutorial:
+                Scroll();
+                break;
+            case GameState.Game:
+                Scroll();
+                break;
+            case GameState.SegmentTransition:
+                Scroll();
+                break;
+            case GameState.GameOver:
+                break;
+        }
+
 
         if (Input.GetKey(KeyCode.P) && Input.GetKey(KeyCode.LeftControl))
         {
@@ -83,5 +106,10 @@ public class ScrollManager : MonoBehaviour
     {
         resetDistance();
         musicManager = MusicManager.instance;
+        musicManager.startIntroTrack();
+    }
+
+    public void Scroll() {
+        distanceScrolled += speed * Time.deltaTime;
     }
 }
