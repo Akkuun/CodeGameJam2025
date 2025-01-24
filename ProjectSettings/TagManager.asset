@@ -7,12 +7,11 @@ TagManager:
   - Foreground
   - Ground
   - BreakableObject
-
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
   - 
@@ -43,13 +42,13 @@ TagManager:
   - 
   m_SortingLayers:
   - name: Background
-    uniqueID: 3072508823
+    uniqueID: 1821668567
     locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Foreground
-    uniqueID: 2459717123
+    uniqueID: 1954471317
     locked: 0
   m_RenderingLayers:
   - Default
