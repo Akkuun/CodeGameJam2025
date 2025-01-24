@@ -16,6 +16,7 @@ public class DatabaseManager : MonoBehaviour
     private DatabaseReference m_database;
 
     private bool m_isLoaded = false;
+    private PlayerController player;
 
     void Start()
     {
@@ -52,7 +53,18 @@ public class DatabaseManager : MonoBehaviour
         }
 
         //TODO: Récupérer le score du joueur
-        int _score = 0; 
+        int _score = 0;
+
+        GameObject playerObject = GameObject.FindWithTag("Player");
+
+        if (playerObject != null)
+        {
+            player = playerObject.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                _score = player.score; // Récupérer le score
+            }
+        }
 
         //TODO: Récupérer les notes du joueur
         bool _note1 = false;
