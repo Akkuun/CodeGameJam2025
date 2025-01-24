@@ -142,7 +142,13 @@ public class PlayerController : MonoBehaviour
             Debug.Log("DOUBLE SAUT PSOIIBLE ");
             canDoubleJump = true;
         }
-        
+        //detection avec un Jumping pad
+        if (normalCollider.IsTouching(collision) && collision.GetComponent<JumpingPadObject>() != null)
+        {
+            Debug.Log("Jumping Pad détecté !");
+            ActivateJumpPad(25f); // Appliquer l'effet du JumpPad
+        }
+
     }
 
     void OnTriggerExit2D(Collider2D collision)
@@ -153,7 +159,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Réinitialise la possibilité de double saut lorsque le joueur quitte l'objet
-        if (collision.GetComponent<DoubleJumpObsttacle>() != null)
+       if (normalCollider.IsTouching(collision) && collision.GetComponent<JumpingPadObject>() != null)
         {
             canDoubleJump = false;
         }
@@ -188,12 +194,11 @@ public class PlayerController : MonoBehaviour
 
     public void ActivateJumpPad(float jumpPadForce)
     {
-        /*
         // Applique une force verticale spécifique pour le JumpPad
-        rb.velocity = new Vector2(rb.velocity.x, jumpPadForce); // Utilisation de rb.velocity pour appliquer la force du saut
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPadForce); // Utilisation de rb.velocity pour appliquer la force du saut
         animator.SetTrigger("Jump");
         canDoubleJump = true; // Permet un double saut après un saut normal
-    */
+    
     
         }
 }
