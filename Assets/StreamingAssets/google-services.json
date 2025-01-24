@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "88673397302",
+    "firebase_url": "https://cgj2025-43824-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "cgj2025-43824",
+    "storage_bucket": "cgj2025-43824.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88673397302:android:90a5f13f1ec88c856e8697",
+        "android_client_info": {
+          "package_name": "fr.ourscafeine.cgj"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwOxHFiupm34QzbknO_Ak8xLV8lyhJScs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

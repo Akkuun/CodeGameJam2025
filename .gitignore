@@ -27,6 +27,9 @@
 .vs/
 .vscode/
 
+#Firebade plugin 
+*FirebaseCppApp*
+
 # Gradle cache directory
 .gradle/
 
