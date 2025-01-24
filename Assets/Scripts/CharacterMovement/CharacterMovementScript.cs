@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -19,17 +20,23 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private bool isSliding = false;
     private bool isGrounded = false; // Indique si le personnage est au sol
+    // flaot array
+    private float[] previousY; // Position Y précédente du personnage
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        previousY = new float[2];
+        previousY[0] = transform.position.y;
+        previousY[1] = float.MaxValue;
     }
 
     void Update()
     {
         // Met à jour l'état d'être au sol
-        isGrounded = IsGrounded();
+        UpdateGrounded();
+        //Debug.Log($"Gournded{isGrounded}");
 
         // Saut
         if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded && !isSliding)
@@ -92,12 +99,14 @@ public class PlayerController : MonoBehaviour
         isSliding = false;
     }
 
-    bool IsGrounded()
+    void UpdateGrounded()
     {
         // Vérifie si le personnage est en contact avec le sol
-        Collider2D hit = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
-        return hit != null;
+        if (previousY[1] != float.MaxValue) isGrounded = Math.Abs(previousY[0] - transform.position.y) + Math.Abs(previousY[1] - transform.position.y) < 0.002f;
+        previousY[1] = previousY[0];
+        previousY[0] = transform.position.y;
     }
+
 
     bool IsObjectInFront(string tag)
     {
