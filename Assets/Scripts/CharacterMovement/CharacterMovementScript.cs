@@ -16,7 +16,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask breakableLayer; // Couche des objets cassables
     public BoxCollider2D breakableDetector; // Point pour détecter les objets devant
     public BoxCollider2D normalCollider; // Collider standard du personnage
-    
+    public bool isDead= false;
+
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -40,8 +41,9 @@ public class PlayerController : MonoBehaviour
         // Met à jour l'état d'être au sol
         UpdateGrounded();
 
-       
-        //Debug.Log(BreakableObjectDetected);
+        CheckIfPlayerIsDead();
+
+      
         // Saut
         if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded && !isSliding)
         {
@@ -55,7 +57,7 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(Slide());
         }
 
-        Debug.Log(isSliding);
+    
     }
 
     // Méthode de saut
@@ -109,10 +111,10 @@ public class PlayerController : MonoBehaviour
         Breakable breakableObject = collision.GetComponent<Breakable>();
         if (breakableObject != null)
         {
-            Debug.Log($"Collision avec {collision.gameObject.name}. isSliding = {isSliding}");
+           
             if (isSliding)
             {
-                Debug.Log("Objet cassable détruit !");
+              
                 Destroy(collision.gameObject);
             }
             else
@@ -168,5 +170,13 @@ public class PlayerController : MonoBehaviour
         }
 
   
+    }
+
+    void CheckIfPlayerIsDead()
+    {
+        if (isDead)
+        {
+            Debug.Log("Le joueur est MORT");
+        }
     }
 }
