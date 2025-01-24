@@ -10,6 +10,12 @@ public enum GameState {
     GameOver,
 }
 
+public enum LevelStyle {
+    Modern,
+    Medieval,
+    SF,
+}
+
 [CreateAssetMenu(fileName = "SpeedManager", menuName = "Scriptable Objects/SpeedManager")]
 public class ScrollManager : MonoBehaviour
 {
