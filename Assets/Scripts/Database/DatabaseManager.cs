@@ -94,9 +94,10 @@ public class DatabaseManager : MonoBehaviour
             DataSnapshot snapshot = await m_database.Child("users").GetValueAsync();
             foreach (DataSnapshot userSnapshot in snapshot.Children)
             {
-                foreach(DataSnapshot noteSnapshot in userSnapshot.Children)
+                string userID = userSnapshot.Key;
+                foreach (DataSnapshot user in userSnapshot.Children)
                 {
-                    User userData = JsonUtility.FromJson<User>(noteSnapshot.GetRawJsonValue());
+                    User userData = JsonUtility.FromJson<User>(user.GetRawJsonValue());
                     users.Add(userData);
                 }
             }
