@@ -5,11 +5,14 @@ TagManager:
   serializedVersion: 3
   tags:
   - Foreground
+  - Ground
+  - BreakableObject
+
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 
