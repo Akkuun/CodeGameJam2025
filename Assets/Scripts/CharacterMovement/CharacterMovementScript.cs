@@ -6,21 +6,25 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Mouvement du Personnage")]
     public float jumpForce = 10f; // Force du saut
-    public float slideDuration = 0.5f; // Durée de la glissade
+    public float slideDuration = 1f; // Durée de la glissade
     public float breakableCheckRadius = 0.2f; // Rayon pour vérifier le sol
     public float objectDetectionDistance = 1f; // Distance horizontale de détection des objets
 
     [Header("References")]
     public Transform groundCheck; // Point pour vérifier si le personnage est au sol
     public LayerMask groundLayer; // Couche utilisée pour détecter le sol
-    public Transform breakableDetector; // Point pour détecter les objets devant
+    public LayerMask breakableLayer; // Couche des objets cassables
+    public BoxCollider2D breakableDetector; // Point pour détecter les objets devant
     public BoxCollider2D normalCollider; // Collider standard du personnage
+    public bool isDead= false; // variable connue de tous pour savoir quand le joueur meurt
+    public bool isSliding = false; // variable connue de tous pour savoir quand le joueur glisse
+
 
     private Rigidbody2D rb;
     private Animator animator;
-    private bool isSliding = false;
+    private bool canSlide = false;
     private bool isGrounded = false; // Indique si le personnage est au sol
-    // flaot array
+    private bool BreakableObjectDetected = false; // Détection du bloc cassable
     private float[] previousY; // Position Y précédente du personnage
 
     void Start()
@@ -36,37 +40,30 @@ public class PlayerController : MonoBehaviour
     {
         // Met à jour l'état d'être au sol
         UpdateGrounded();
-        //Debug.Log($"Gournded{isGrounded}");
 
+        CheckIfPlayerIsDead();
+
+      
         // Saut
         if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded && !isSliding)
         {
-            print("Jump");
-            print("isGrounded" + isGrounded);
             Jump();
         }
 
         // Glissade
-        if (Input.GetKeyDown(KeyCode.DownArrow) && isGrounded && !isSliding)
+        if (Input.GetKeyDown(KeyCode.DownArrow) && canSlide && !isSliding)
         {
-            if (IsObjectInFront("Breakable"))
-            {
-                StartCoroutine(Slide());
-
-                // Change temporairement le scale en Y du personnage pour le réduire
-                Vector3 originalScale = transform.localScale;
-                transform.localScale = new Vector3(originalScale.x, originalScale.y * 0.5f, originalScale.z);
-
-                // Restaure le scale après la durée de la glissade
-                StartCoroutine(ResetScale(originalScale, slideDuration));
-            }
+            
+            StartCoroutine(Slide());
         }
+
+    
     }
 
     // Méthode de saut
     void Jump()
     {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce); // Utilisation de rb.velocity au lieu de linearVelocity
         animator.SetTrigger("Jump");
     }
 
@@ -81,22 +78,23 @@ public class PlayerController : MonoBehaviour
     IEnumerator Slide()
     {
         isSliding = true;
+
+        // Détection d'un objet cassable devant le joueur
+     
+
         animator.SetTrigger("Slide");
 
         // Réduit temporairement la taille du collider pour simuler la glissade
         Vector2 originalSize = normalCollider.size;
-        Vector2 originalOffset = normalCollider.offset;
-
         normalCollider.size = new Vector2(originalSize.x, originalSize.y / 2);
-        normalCollider.offset = new Vector2(originalOffset.x, originalOffset.y / 2);
 
         yield return new WaitForSeconds(slideDuration);
 
         // Restaure le collider
         normalCollider.size = originalSize;
-        normalCollider.offset = originalOffset;
 
         isSliding = false;
+      
     }
 
     void UpdateGrounded()
@@ -107,25 +105,61 @@ public class PlayerController : MonoBehaviour
         previousY[0] = transform.position.y;
     }
 
-
-    bool IsObjectInFront(string tag)
+    // Détection des objets cassables via le trigger
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        // Raycast vers l'avant pour détecter un objet avec le tag spécifié
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, objectDetectionDistance);
-        if (hit.collider != null && hit.collider.CompareTag(tag))
+        Breakable breakableObject = collision.GetComponent<Breakable>();
+        if (breakableObject != null)
         {
-            return true;
+           
+            if (isSliding)
+            {
+              
+                Destroy(collision.gameObject);
+            }
+            else
+            {
+                canSlide = true;
+            }
         }
-        return false;
+    }
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.GetComponent<Breakable>() != null)
+        {
+            canSlide = false;
+        }
     }
 
-    void OnDrawGizmosSelected()
+    
+    //fonction qui met  BreakableObjectDetected si un Breakable entre dans la box collider
+    void CheckForBreakableObject()
     {
-        // Affiche un cercle dans l'éditeur pour visualiser le point de vérification du sol
-        if (groundCheck != null)
+        // Vérifie la détection d'un objet cassable devant le joueur en utilisant OverlapBox
+        Collider2D[] hitColliders = Physics2D.OverlapBoxAll(breakableDetector.bounds.center, breakableDetector.bounds.size, 0f);
+        BreakableObjectDetected = false; // Réinitialise la détection
+           
+        foreach (var hitCollider in hitColliders)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(groundCheck.position, breakableCheckRadius);
+            if (hitCollider != null && hitCollider.GetComponent<Breakable>() != null)
+            {
+                // Si un objet de type Breakable est trouvé, on met à jour la variable
+                BreakableObjectDetected = true;
+
+
+                
+                break; // On peut sortir de la boucle dès qu'on détecte un bloc cassable
+            }
+        }
+
+  
+    }
+
+    void CheckIfPlayerIsDead()
+    {
+        if (isDead)
+        {
+            Debug.Log("Le joueur est MORT");
         }
     }
 }
