@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public BoxCollider2D normalCollider; // Collider standard du personnage
     public bool isDead = false; // variable connue de tous pour savoir quand le joueur meurt
     public bool isSliding = false; // variable connue de tous pour savoir quand le joueur glisse
+    private ScrollManager gameManager;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -36,10 +37,15 @@ public class PlayerController : MonoBehaviour
         previousY = new float[2];
         previousY[0] = transform.position.y;
         previousY[1] = float.MaxValue;
+        gameManager = ScrollManager.instance;
     }
 
     void Update()
     {
+        if (gameManager.gameState == GameState.Title || gameManager.gameState == GameState.GameOver)
+        {
+            return;
+        }
         // Met à jour l'état d'être au sol
         UpdateGrounded();
 
