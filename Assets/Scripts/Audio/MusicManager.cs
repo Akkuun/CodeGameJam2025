@@ -10,6 +10,7 @@ public class MusicManager : MonoBehaviour
 {
     public static MusicManager instance;
     public float elapsedTime;
+    [SerializeField] public AudioSource introAudioSource;
     [SerializeField] public AudioSource[] audioSources;
     [SerializeField] public ScrollManager scrollManager;
     //private float diffSum;
@@ -35,7 +36,7 @@ public class MusicManager : MonoBehaviour
         {
             audioSource.loop = true;
         }
-        audioSources[0].Play();
+        introAudioSource.Play();
         scrollManager = ScrollManager.instance;
         //diffCount = 0;
         //diffSum = 0;
