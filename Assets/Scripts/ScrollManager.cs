@@ -6,6 +6,7 @@ using System;
 public class ScrollManager : MonoBehaviour
 {
     public static ScrollManager instance;
+    public static MusicManager musicManager;
     [SerializeField] public float speed = 1.0f;
     [SerializeField] public bool showDebugLines;
     [SerializeField] public bool showLabels;
@@ -71,10 +72,16 @@ public class ScrollManager : MonoBehaviour
     {
         //elapsedTime += Time.deltaTime;
         distanceScrolled += speed * Time.deltaTime;
+
+        if (Input.GetKey(KeyCode.P) && Input.GetKey(KeyCode.LeftControl))
+        {
+            musicManager.startDebugTrack();
+        }
     }
 
     void Start()
     {
         resetDistance();
+        musicManager = MusicManager.instance;
     }
 }
