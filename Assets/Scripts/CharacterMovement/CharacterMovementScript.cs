@@ -142,6 +142,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("DOUBLE SAUT PSOIIBLE ");
             canDoubleJump = true;
         }
+        
     }
 
     void OnTriggerExit2D(Collider2D collision)
@@ -184,4 +185,15 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Le joueur est MORT");
         }
     }
+
+    public void ActivateJumpPad(float jumpPadForce)
+    {
+        /*
+        // Applique une force verticale spécifique pour le JumpPad
+        rb.velocity = new Vector2(rb.velocity.x, jumpPadForce); // Utilisation de rb.velocity pour appliquer la force du saut
+        animator.SetTrigger("Jump");
+        canDoubleJump = true; // Permet un double saut après un saut normal
+    */
+    
+        }
 }
