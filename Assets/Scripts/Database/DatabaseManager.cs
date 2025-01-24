@@ -63,7 +63,7 @@ public class DatabaseManager : MonoBehaviour
         User user = new User(m_name.text, m_userID, _score, _note1, _note2, _note3);
         string json = JsonUtility.ToJson(user);
         
-        m_database.Child("users").Child(m_name.text).SetRawJsonValueAsync(json).ContinueWith(task => {
+        m_database.Child("users").Child(m_userID).SetRawJsonValueAsync(json).ContinueWith(task => {
             if (task.IsFaulted)
             {
                 Debug.LogError("Failed to save user data: " + task.Exception);
