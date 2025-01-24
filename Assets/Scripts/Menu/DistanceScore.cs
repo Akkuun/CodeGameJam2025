@@ -52,7 +52,7 @@ public class DistanceScore : MonoBehaviour
                 if (player != null)
                 {
 
-                    Debug.Log(player.levelPosition);
+                    //Debug.Log(player.levelPosition);
 
                     if (player.levelPosition == 0)
                     {

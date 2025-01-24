@@ -57,23 +57,23 @@ public class PlayerController : MonoBehaviour
 
         CheckIfPlayerIsDead();
 
-        // Saut
+        // Saut si flèche du hazut + AU SOL + NE GLISSE PAS
         if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded && !isSliding)
         {
             Jump(jumpForce); // Saut normal
             explosionSource.Play();
         }
         // Double saut
-        else if (Input.GetKeyDown(KeyCode.UpArrow) && !isGrounded && canDoubleJump && !isSliding)
-        {
-            DoubleJump(jumpForce); // Double saut
-        }
+        //else if (Input.GetKeyDown(KeyCode.UpArrow) && !isGrounded && canDoubleJump && !isSliding)
+        //{
+        //    DoubleJump(jumpForce); // Double saut
+        //}
 
-        // Glissade
-        if (Input.GetKeyDown(KeyCode.DownArrow) && canSlide && !isSliding)
-        {
-            StartCoroutine(Slide());
-        }
+        //// Glissade
+        //if (Input.GetKeyDown(KeyCode.DownArrow) && canSlide && !isSliding)
+        //{
+        //    StartCoroutine(Slide());
+        //}
 
         // Score 
         if (ScrollManager.instance != null)
