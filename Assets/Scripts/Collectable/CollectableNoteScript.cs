@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
-    [SerializeField] public LevelStyle levelStyle;
+    [SerializeField] public MusicStyle musicStyle;
+    [Header("Layer type doesn't matter for first note.")]
+    [Header("Also don't use layer type Perc")]
+    [SerializeField] public LayerType layerType;
     private ScrollManager gameManager;
     void Start()
     {
@@ -15,7 +18,8 @@ public class Collectable : MonoBehaviour
 
         if (player != null)
         {
-            gameManager.setTheme(levelStyle);
+            gameManager.startSegment(this);
+            Destroy(gameObject);
         }
     }
 }

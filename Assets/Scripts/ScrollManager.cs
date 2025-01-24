@@ -10,12 +10,6 @@ public enum GameState {
     GameOver,
 }
 
-public enum LevelStyle {
-    Modern,
-    Medieval,
-    SF,
-}
-
 [CreateAssetMenu(fileName = "SpeedManager", menuName = "Scriptable Objects/SpeedManager")]
 public class ScrollManager : MonoBehaviour
 {
@@ -32,6 +26,7 @@ public class ScrollManager : MonoBehaviour
     public float distanceScrolled { get; private set; }
     // public float elapsedTime { get; private set; }
     public GameState gameState = GameState.Title;
+    private MusicStyle currentTheme;
 
     private void Awake()
     {
@@ -113,21 +108,27 @@ public class ScrollManager : MonoBehaviour
         resetDistance();
         musicManager = MusicManager.instance;
         musicManager.startIntroTrack();
+        instance.currentTheme = MusicStyle.None;
     }
 
     public void Scroll() {
         distanceScrolled += speed * Time.deltaTime;
     }
 
-    public void setTheme(LevelStyle style) {
-        switch (style)
-        {
-            case LevelStyle.Modern:
-                break;
-            case LevelStyle.Medieval:
-                break;
-            case LevelStyle.SF:
-                break;
-        }
+    public void setTheme(MusicStyle style, LayerType type) {
+        musicManager.setTheme(style, type);
+    }
+
+    public void startGame(Collectable note) {
+        gameState = GameState.Game;
+        instance.currentTheme = note.musicStyle;
+        Debug.Log($"Calling startGame with {currentTheme}, {note.musicStyle}, {note.layerType}");
+        musicManager.startSegment(note.musicStyle, currentTheme, note.layerType);
+    }
+
+    public void startSegment(Collectable note) {
+        //Debug.Log($"Calling startSegment with {currentTheme}, {note.musicStyle}, {note.layerType}");
+        musicManager.startSegment(note.musicStyle, currentTheme, note.layerType);
+        instance.currentTheme = note.musicStyle;
     }
 }
