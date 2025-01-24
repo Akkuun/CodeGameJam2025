@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Mouvement du Personnage")]
     public float jumpForce = 10f; // Force du saut
-    public float slideDuration = 2.0f; // Durée de la glissade
+    public float slideDuration = 1f; // Durée de la glissade
     public float breakableCheckRadius = 0.2f; // Rayon pour vérifier le sol
     public float objectDetectionDistance = 1f; // Distance horizontale de détection des objets
 
