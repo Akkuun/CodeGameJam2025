@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class DoubleJumpObsttacle : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public float jumpPadForce = 15f; // La force appliquée par le JumpPad
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        // Vérifie si l'objet entrant est le joueur
+        PlayerController player = collision.GetComponent<PlayerController>();
+        if (player != null)
+        {
+            // Applique la force de saut au joueur
+            player.ActivateJumpPad(jumpPadForce);
+        }
     }
 }
