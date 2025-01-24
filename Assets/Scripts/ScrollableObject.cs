@@ -7,6 +7,7 @@ public class ScrollableObject : MonoBehaviour
     void Start()
     {
         speedManager = ScrollManager.instance;
+        speedManager.resetDistance();
     }
 
     // Update is called once per frame

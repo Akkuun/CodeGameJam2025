@@ -95,7 +95,6 @@ public class PlayerController : MonoBehaviour
         // Restaure le collider
         normalCollider.size = originalSize;
         normalCollider.offset = originalOffset;
-
         isSliding = false;
     }
 

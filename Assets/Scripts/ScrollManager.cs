@@ -13,7 +13,10 @@ public class ScrollManager : MonoBehaviour
     [SerializeField] public float height;
     [SerializeField] public int segments; 
     [SerializeField] public int segmentDivisions;
-    private float audioLength = 28.44f;
+    private float audioLength = 56.904f;
+    public float distanceScrolled { get; private set; }
+    // public float elapsedTime { get; private set; }
+
 
     private void Awake()
     {
@@ -43,7 +46,7 @@ public class ScrollManager : MonoBehaviour
 
             for (int r = 0; r < segments; r++)
             {
-                for (int i = 0; i <= segmentDivisions; i++)
+                for (int i = 0; i < segmentDivisions; i++)
                 {
                     Gizmos.color = Color.red;
                     Gizmos.DrawLine(secondPoint, secondPoint + Vector3.up * height);
@@ -53,5 +56,25 @@ public class ScrollManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public float getTheoreticalDistance(float time) {
+        return time * speed;
+    }
+
+    public void resetDistance() {
+        distanceScrolled = 0;
+        //elapsedTime = 0;
+    }
+
+    public void Update()
+    {
+        //elapsedTime += Time.deltaTime;
+        distanceScrolled += speed * Time.deltaTime;
+    }
+
+    void Start()
+    {
+        resetDistance();
     }
 }
