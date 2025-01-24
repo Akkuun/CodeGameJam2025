@@ -135,16 +135,16 @@ public class ScrollManager : MonoBehaviour
     public void AdjustObjectsAfterTeleport(float offset)
     {
         Debug.Log("Adujst");
-        // Récupère tous les objets défilants dans la scène
+        // Rï¿½cupï¿½re tous les objets dï¿½filants dans la scï¿½ne
         ScrollableObject[] scrollableObjects = FindObjectsOfType<ScrollableObject>();
         foreach (var obj in scrollableObjects)
         {
 
-            // Ajuste leur position en fonction du décalage
+            // Ajuste leur position en fonction du dï¿½calage
             obj.AdjustPosition(offset);
         }
 
-        // Réinitialise la distance défilée
+        // Rï¿½initialise la distance dï¿½filï¿½e
         resetDistance();
     }
 }
