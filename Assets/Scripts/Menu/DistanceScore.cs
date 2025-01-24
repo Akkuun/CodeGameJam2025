@@ -6,6 +6,7 @@ public class DistanceScore : MonoBehaviour
 {
     
     public Text distanceText;
+    public float distance;
 
     void Start()
     {
