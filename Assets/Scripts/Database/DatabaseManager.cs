@@ -91,7 +91,7 @@ public class DatabaseManager : MonoBehaviour
     {
         while (!m_isLoaded)
         {
-            await Task.Delay(100);
+            await Task.Delay(500);
         }
 
         List<User> users = new List<User>();
@@ -128,6 +128,18 @@ public class DatabaseManager : MonoBehaviour
                 Debug.LogWarning("No data found in the 'users' node.");
             }
         }
+        catch (FirebaseException e)
+        {
+            Debug.LogError("Failed to read the database: " + e.Message);
+            // Gestion des erreurs de réseau
+            if (e.ErrorCode == -24)
+            {
+                Debug.LogError("Network error: " + e.Message);
+                // Réessayer la lecture après un délai
+                await Task.Delay(2000);
+                return await GetAllUsersAsync();
+            }
+        }
         catch (Exception e)
         {
             Debug.LogError("Failed to read the database: " + e.Message);
@@ -135,6 +147,7 @@ public class DatabaseManager : MonoBehaviour
 
         return users;
     }
+
 
 
 
