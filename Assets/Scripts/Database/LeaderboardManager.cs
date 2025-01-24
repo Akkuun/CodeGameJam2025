@@ -46,7 +46,7 @@ public class LeaderboardManager : MonoBehaviour
             {
                 m_textComponents[i].color = Color.green;
             }
-            m_textComponents[i].text = $"{i + 1}- {m_users[i].Name} - {m_users[i].Score}";
+            m_textComponents[i].text = $"{i + 1} - {m_users[i].Name} - {m_users[i].Score}";
         }
         for (int j = m_users.Count; j < m_textComponents.Length; j++)
         {
