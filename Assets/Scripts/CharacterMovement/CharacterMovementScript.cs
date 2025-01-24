@@ -139,13 +139,12 @@ public class PlayerController : MonoBehaviour
         // Détection de l'objet de double saut
         if (collision.GetComponent<DoubleJumpObsttacle>() != null)
         {
-            Debug.Log("DOUBLE SAUT PSOIIBLE ");
             canDoubleJump = true;
         }
         //detection avec un Jumping pad
         if (normalCollider.IsTouching(collision) && collision.GetComponent<JumpingPadObject>() != null)
         {
-            Debug.Log("Jumping Pad détecté !");
+           
             ActivateJumpPad(25f); // Appliquer l'effet du JumpPad
         }
 
@@ -188,7 +187,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isDead)
         {
-            Debug.Log("Le joueur est MORT");
+           // Debug.Log("Le joueur est MORT");
         }
     }
 
