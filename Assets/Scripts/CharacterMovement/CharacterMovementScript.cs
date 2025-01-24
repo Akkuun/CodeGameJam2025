@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     public BoxCollider2D normalCollider; // Collider standard du personnage
     public bool isDead = false; // variable connue de tous pour savoir quand le joueur meurt
     public bool isSliding = false; // variable connue de tous pour savoir quand le joueur glisse
+    private ScrollManager gameManager;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -41,11 +42,16 @@ public class PlayerController : MonoBehaviour
         previousY = new float[2];
         previousY[0] = transform.position.y;
         previousY[1] = float.MaxValue;
+        gameManager = ScrollManager.instance;
         levelPosition = 0;
     }
 
     void Update()
     {
+        if (gameManager.gameState == GameState.Title || gameManager.gameState == GameState.GameOver)
+        {
+            return;
+        }
         // Met à jour l'état d'être au sol
         UpdateGrounded();
 
@@ -152,10 +158,15 @@ public class PlayerController : MonoBehaviour
         // Détection de l'objet de double saut
         if (collision.GetComponent<DoubleJumpObsttacle>() != null)
         {
-            Debug.Log("DOUBLE SAUT PSOIIBLE ");
             canDoubleJump = true;
         }
-        
+        //detection avec un Jumping pad
+        if (normalCollider.IsTouching(collision) && collision.GetComponent<JumpingPadObject>() != null)
+        {
+           
+            ActivateJumpPad(25f); // Appliquer l'effet du JumpPad
+        }
+
     }
 
     void OnTriggerExit2D(Collider2D collision)
@@ -166,7 +177,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Réinitialise la possibilité de double saut lorsque le joueur quitte l'objet
-        if (collision.GetComponent<DoubleJumpObsttacle>() != null)
+       if (normalCollider.IsTouching(collision) && collision.GetComponent<JumpingPadObject>() != null)
         {
             canDoubleJump = false;
         }
@@ -195,18 +206,17 @@ public class PlayerController : MonoBehaviour
     {
         if (isDead)
         {
-            Debug.Log("Le joueur est MORT");
+           // Debug.Log("Le joueur est MORT");
         }
     }
 
     public void ActivateJumpPad(float jumpPadForce)
     {
-        /*
         // Applique une force verticale spécifique pour le JumpPad
-        rb.velocity = new Vector2(rb.velocity.x, jumpPadForce); // Utilisation de rb.velocity pour appliquer la force du saut
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPadForce); // Utilisation de rb.velocity pour appliquer la force du saut
         animator.SetTrigger("Jump");
         canDoubleJump = true; // Permet un double saut après un saut normal
-    */
+    
     
         }
 }

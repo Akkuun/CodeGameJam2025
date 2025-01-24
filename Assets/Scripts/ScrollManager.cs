@@ -2,6 +2,20 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
+public enum GameState {
+    Title,
+    Tutorial,
+    Game,
+    SegmentTransition,
+    GameOver,
+}
+
+public enum LevelStyle {
+    Modern,
+    Medieval,
+    SF,
+}
+
 [CreateAssetMenu(fileName = "SpeedManager", menuName = "Scriptable Objects/SpeedManager")]
 public class ScrollManager : MonoBehaviour
 {
@@ -17,7 +31,7 @@ public class ScrollManager : MonoBehaviour
     private float audioLength = 56.904f;
     public float distanceScrolled { get; private set; }
     // public float elapsedTime { get; private set; }
-
+    public GameState gameState = GameState.Title;
 
     private void Awake()
     {
@@ -70,8 +84,23 @@ public class ScrollManager : MonoBehaviour
 
     public void Update()
     {
-        //elapsedTime += Time.deltaTime;
-        distanceScrolled += speed * Time.deltaTime;
+        switch (gameState)
+        {
+            case GameState.Title:
+                break;
+            case GameState.Tutorial:
+                Scroll();
+                break;
+            case GameState.Game:
+                Scroll();
+                break;
+            case GameState.SegmentTransition:
+                Scroll();
+                break;
+            case GameState.GameOver:
+                break;
+        }
+
 
         if (Input.GetKey(KeyCode.P) && Input.GetKey(KeyCode.LeftControl))
         {
@@ -83,5 +112,38 @@ public class ScrollManager : MonoBehaviour
     {
         resetDistance();
         musicManager = MusicManager.instance;
+        musicManager.startIntroTrack();
+    }
+
+    public void Scroll() {
+        distanceScrolled += speed * Time.deltaTime;
+    }
+
+    public void setTheme(LevelStyle style) {
+        switch (style)
+        {
+            case LevelStyle.Modern:
+                break;
+            case LevelStyle.Medieval:
+                break;
+            case LevelStyle.SF:
+                break;
+        }
+    }
+
+    public void AdjustObjectsAfterTeleport(float offset)
+    {
+        Debug.Log("Adujst");
+        // Récupère tous les objets défilants dans la scène
+        ScrollableObject[] scrollableObjects = FindObjectsOfType<ScrollableObject>();
+        foreach (var obj in scrollableObjects)
+        {
+
+            // Ajuste leur position en fonction du décalage
+            obj.AdjustPosition(offset);
+        }
+
+        // Réinitialise la distance défilée
+        resetDistance();
     }
 }
