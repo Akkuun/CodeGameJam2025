@@ -9,15 +9,21 @@ public class Breakable : MonoBehaviour
 
         if (player != null)
         {
-            Debug.Log($"Le joueur {collision.gameObject.name} est touché par {gameObject.name}.");
+            // Si le joueur est en glissade, ne pas déclencher la mort
+            if (player.isSliding)
+            {
+                // Détruire l'objet si le joueur glisse
+                Destroy(gameObject);
+            }
+            else
+            {
+                // Passe la variable isDead à true si le joueur n'est pas en glissade
+                Debug.Log($"Le joueur {collision.gameObject.name} est touché par {gameObject.name}.");
+                player.isDead = true;
 
-            // Passe la variable MORT du joueur à true
-            player.isDead = true;
-
-            // Facultatif : Détruire cet objet après avoir affecté le joueur
-            Destroy(gameObject);
-
-            // Facultatif : Jouer une animation ou un effet sonore
+                // Facultatif : Détruire l'objet après la mort
+                Destroy(gameObject);
+            }
         }
     }
 }

@@ -16,13 +16,13 @@ public class PlayerController : MonoBehaviour
     public LayerMask breakableLayer; // Couche des objets cassables
     public BoxCollider2D breakableDetector; // Point pour détecter les objets devant
     public BoxCollider2D normalCollider; // Collider standard du personnage
-    public bool isDead= false;
+    public bool isDead= false; // variable connue de tous pour savoir quand le joueur meurt
+    public bool isSliding = false; // variable connue de tous pour savoir quand le joueur glisse
 
 
     private Rigidbody2D rb;
     private Animator animator;
     private bool canSlide = false;
-    private bool isSliding = false;
     private bool isGrounded = false; // Indique si le personnage est au sol
     private bool BreakableObjectDetected = false; // Détection du bloc cassable
     private float[] previousY; // Position Y précédente du personnage
@@ -131,24 +131,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Visualisation dans l'éditeur du rayon de détection du sol
-    void OnDrawGizmosSelected()
-    {
-        if (groundCheck != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(groundCheck.position, breakableCheckRadius);
-        }
-    }
-
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        if (normalCollider != null)
-        {
-            Gizmos.DrawWireCube(normalCollider.bounds.center, normalCollider.bounds.size);
-        }
-    }
+    
     //fonction qui met  BreakableObjectDetected si un Breakable entre dans la box collider
     void CheckForBreakableObject()
     {
