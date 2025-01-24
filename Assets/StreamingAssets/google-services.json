@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:88673397302:android:90a5f13f1ec88c856e8697",
+        "mobilesdk_app_id": "1:88673397302:android:315d73ba8c41459f6e8697",
         "android_client_info": {
-          "package_name": "fr.ourscafeine.cgj"
+          "package_name": "fr.ourscafeine.cgj25"
         }
       },
       "oauth_client": [],
