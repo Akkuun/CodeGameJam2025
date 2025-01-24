@@ -640,6 +640,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
+  breakableLayer:
+    serializedVersion: 2
+    m_Bits: 0
   breakableDetector: {fileID: 1938205228}
   normalCollider: {fileID: 1432572389}
 --- !u!95 &1432572394
@@ -855,17 +858,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1643852309258577691, guid: f694675e066aa614e99bf2f02bc1f6d1, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2511173737222163321, guid: f694675e066aa614e99bf2f02bc1f6d1, type: 3}
       propertyPath: m_Name
       value: Square
       objectReference: {fileID: 0}
     - target: {fileID: 3965811302354361028, guid: f694675e066aa614e99bf2f02bc1f6d1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.79
+      value: 16.03
       objectReference: {fileID: 0}
     - target: {fileID: 3965811302354361028, guid: f694675e066aa614e99bf2f02bc1f6d1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.06
+      value: -3.01
       objectReference: {fileID: 0}
     - target: {fileID: 3965811302354361028, guid: f694675e066aa614e99bf2f02bc1f6d1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -917,8 +924,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1382552315896255273, guid: 8ea0ab3f8163d455ebfcd75803a11bfd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 33.290337
+      objectReference: {fileID: 0}
+    - target: {fileID: 1382552315896255273, guid: 8ea0ab3f8163d455ebfcd75803a11bfd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0038
+      value: 4.0548
       objectReference: {fileID: 0}
     - target: {fileID: 1382552315896255273, guid: 8ea0ab3f8163d455ebfcd75803a11bfd, type: 3}
       propertyPath: m_LocalPosition.y

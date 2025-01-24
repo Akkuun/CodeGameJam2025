@@ -6,13 +6,14 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Mouvement du Personnage")]
     public float jumpForce = 10f; // Force du saut
-    public float slideDuration = 0.5f; // Durée de la glissade
+    public float slideDuration = 2.0f; // Durée de la glissade
     public float breakableCheckRadius = 0.2f; // Rayon pour vérifier le sol
     public float objectDetectionDistance = 1f; // Distance horizontale de détection des objets
 
     [Header("References")]
     public Transform groundCheck; // Point pour vérifier si le personnage est au sol
     public LayerMask groundLayer; // Couche utilisée pour détecter le sol
+    public LayerMask breakableLayer; // Couche des objets cassables
     public BoxCollider2D breakableDetector; // Point pour détecter les objets devant
     public BoxCollider2D normalCollider; // Collider standard du personnage
     
@@ -39,9 +40,8 @@ public class PlayerController : MonoBehaviour
         // Met à jour l'état d'être au sol
         UpdateGrounded();
 
-        // Détection d'un objet cassable devant le joueur
-        CheckForBreakableObject();
-        Debug.Log(BreakableObjectDetected);
+       
+        //Debug.Log(BreakableObjectDetected);
         // Saut
         if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded && !isSliding)
         {
@@ -51,8 +51,11 @@ public class PlayerController : MonoBehaviour
         // Glissade
         if (Input.GetKeyDown(KeyCode.DownArrow) && canSlide && !isSliding)
         {
+            
             StartCoroutine(Slide());
         }
+
+        Debug.Log(isSliding);
     }
 
     // Méthode de saut
@@ -73,23 +76,23 @@ public class PlayerController : MonoBehaviour
     IEnumerator Slide()
     {
         isSliding = true;
-        Debug.Log("EJ SLIDE");
+
+        // Détection d'un objet cassable devant le joueur
+     
+
         animator.SetTrigger("Slide");
 
         // Réduit temporairement la taille du collider pour simuler la glissade
         Vector2 originalSize = normalCollider.size;
-        Vector2 originalOffset = normalCollider.offset;
-
         normalCollider.size = new Vector2(originalSize.x, originalSize.y / 2);
-        normalCollider.offset = new Vector2(originalOffset.x, originalOffset.y / 2);
 
         yield return new WaitForSeconds(slideDuration);
 
         // Restaure le collider
         normalCollider.size = originalSize;
-        normalCollider.offset = originalOffset;
-        Debug.Log("FIN SLIDE");
+
         isSliding = false;
+      
     }
 
     void UpdateGrounded()
@@ -106,26 +109,23 @@ public class PlayerController : MonoBehaviour
         Breakable breakableObject = collision.GetComponent<Breakable>();
         if (breakableObject != null)
         {
+            Debug.Log($"Collision avec {collision.gameObject.name}. isSliding = {isSliding}");
             if (isSliding)
             {
-                // Si le personnage est en glissade, on détruit l'objet cassable
-                Destroy(breakableObject.gameObject);  // Détruit l'objet
-                Debug.Log("Objet cassable détruit");
+                Debug.Log("Objet cassable détruit !");
+                Destroy(collision.gameObject);
             }
             else
             {
-                // Si le personnage n'est pas en glissade, la glissade est autorisée
                 canSlide = true;
             }
         }
     }
-
     void OnTriggerExit2D(Collider2D collision)
     {
-        // Vérifie si l'objet sortant possède un composant Breakable
         if (collision.GetComponent<Breakable>() != null)
         {
-            canSlide = false; // L'objet cassable a quitté la zone, la glissade n'est plus autorisée
+            canSlide = false;
         }
     }
 
@@ -139,6 +139,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        if (normalCollider != null)
+        {
+            Gizmos.DrawWireCube(normalCollider.bounds.center, normalCollider.bounds.size);
+        }
+    }
+    //fonction qui met  BreakableObjectDetected si un Breakable entre dans la box collider
     void CheckForBreakableObject()
     {
         // Vérifie la détection d'un objet cassable devant le joueur en utilisant OverlapBox
@@ -151,6 +160,8 @@ public class PlayerController : MonoBehaviour
             {
                 // Si un objet de type Breakable est trouvé, on met à jour la variable
                 BreakableObjectDetected = true;
+
+
                 
                 break; // On peut sortir de la boucle dès qu'on détecte un bloc cassable
             }
