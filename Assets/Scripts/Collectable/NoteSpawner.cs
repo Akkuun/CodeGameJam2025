@@ -24,7 +24,7 @@ public class NoteSpawner : MonoBehaviour
     }
     public void spawnNote()
     {
-        Debug.Log($"Spawning note : {canSpawn}, first segment : {musicManager.firstSegment()}");
+        //Debug.Log($"Spawning note : {canSpawn}, first segment : {musicManager.firstSegment()}");
         if (!canSpawn) return;
 
         GameObject note0 = Instantiate(notePrefab, spawnPoints[0].position, Quaternion.identity);

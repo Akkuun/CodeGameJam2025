@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class Breakable : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         // V�rifie si l'objet en collision est le joueur
-        PlayerController player = collision.GetComponent<PlayerController>();
+        PlayerController player = collision.gameObject.GetComponent<PlayerController>();
 
         if (player != null)
         {
@@ -19,10 +19,10 @@ public class Breakable : MonoBehaviour
             {
                 // Passe la variable isDead � true si le joueur n'est pas en glissade
                 Debug.Log($"Le joueur {collision.gameObject.name} est touch� par {gameObject.name}.");
-                player.isDead = true;
+                //player.isDead = true;
 
                 // Facultatif : D�truire l'objet apr�s la mort
-                Destroy(gameObject);
+                //Destroy(gameObject);
             }
         }
     }

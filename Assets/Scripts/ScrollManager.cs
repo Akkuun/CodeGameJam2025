@@ -23,6 +23,7 @@ public class ScrollManager : MonoBehaviour
     [SerializeField] public int segments; 
     [SerializeField] public int segmentDivisions;
     [SerializeField] public NoteSpawner noteSpawner;
+    [SerializeField] public PlayerController playerController;
     private float audioLength = 56.904f;
     public float distanceScrolled { get; private set; }
     // public float elapsedTime { get; private set; }
@@ -80,6 +81,10 @@ public class ScrollManager : MonoBehaviour
 
     public void Update()
     {
+        if (playerController.isDead)
+        {
+            gameState = GameState.GameOver;
+        }
         switch (gameState)
         {
             case GameState.Title:
@@ -94,6 +99,8 @@ public class ScrollManager : MonoBehaviour
                 Scroll();
                 break;
             case GameState.GameOver:
+            // Display game over screen
+                Debug.Log("Game Over");
                 break;
         }
 

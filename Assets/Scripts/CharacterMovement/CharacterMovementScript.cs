@@ -191,6 +191,10 @@ public class PlayerController : MonoBehaviour
 
     void CheckIfPlayerIsDead()
     {
+        if (gameObject.transform.position.x < -0.1)
+        {
+            isDead = true;
+        }
         if (isDead)
         {
            // Debug.Log("Le joueur est MORT");
