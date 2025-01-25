@@ -22,6 +22,7 @@ public class ScrollManager : MonoBehaviour
     [SerializeField] public float height;
     [SerializeField] public int segments; 
     [SerializeField] public int segmentDivisions;
+    [SerializeField] public NoteSpawner noteSpawner;
     private float audioLength = 56.904f;
     public float distanceScrolled { get; private set; }
     // public float elapsedTime { get; private set; }
@@ -109,6 +110,7 @@ public class ScrollManager : MonoBehaviour
         musicManager = MusicManager.instance;
         musicManager.startIntroTrack();
         instance.currentTheme = MusicStyle.None;
+        noteSpawner.spawnNote();
     }
 
     public void Scroll() {

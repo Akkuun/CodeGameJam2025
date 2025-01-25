@@ -30,7 +30,9 @@ public class MusicManager : MonoBehaviour
     [SerializeField] public ScrollManager scrollManager;
     //private float diffSum;
     //private float diffCount;
-    private MusicStyle[] layersUnlocked = new MusicStyle[4]; // 0: Melo1, 1: Melo2, 2: Perc, 3: Acc
+
+    // 0: Melo1, 1: Melo2, 2: Perc, 3: Acc
+    public MusicStyle[] layersUnlocked = new MusicStyle[4]; 
 
     private AudioSource[] getAudioSourceFromStyle(MusicStyle style) {
         if (style == MusicStyle.Modern) {
@@ -141,5 +143,23 @@ public class MusicManager : MonoBehaviour
 
     public void setTheme(MusicStyle style, LayerType type) {
         unlockLayer(style, type);
+    }
+
+    public bool firstSegment() {
+        return layersUnlocked[0] == MusicStyle.None && layersUnlocked[1] == MusicStyle.None && layersUnlocked[3] == MusicStyle.None;
+    }
+
+    public MusicStyle[] getUnlockedLayers() {
+        return layersUnlocked;
+    }
+
+    public LayerType[] getLayersStillNone() {
+        LayerType[] layers = new LayerType[4];
+        for (int i = 0; i < 4; i++) {
+            if (layersUnlocked[i] == MusicStyle.None) {
+                layers[i] = (LayerType)i;
+            }
+        }
+        return layers;
     }
 }

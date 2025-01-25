@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Collectable : MonoBehaviour
@@ -11,6 +12,15 @@ public class Collectable : MonoBehaviour
     {
         gameManager = ScrollManager.instance;
     }
+
+    void Update()
+    {
+        if (transform.position.x < -15)
+        {
+            gameManager.noteSpawner.spawnNote();
+            Destroy(gameObject);
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // V�rifie si l'objet en collision est le joueur
@@ -18,8 +28,27 @@ public class Collectable : MonoBehaviour
 
         if (player != null)
         {
+            Debug.Log("Changing music");
             gameManager.startSegment(this);
-            Destroy(gameObject);
+            DestroyAndResetSpawnCondition();
         }
+    }
+
+    private void DestroyAndResetSpawnCondition()
+    {
+        Destroy(gameObject);
+        gameManager.noteSpawner.resetSpawnCondition();
+    }
+
+    public void Setup(MusicStyle musicStyle, LayerType layerType)
+    {
+        this.musicStyle = musicStyle;
+        this.layerType = layerType;
+    }
+
+
+    public string toString()
+    {
+        return $"Collectable Note = MusicStyle: {musicStyle}, LayerType: {layerType}";
     }
 }
