@@ -23,7 +23,7 @@ public class InteractableObstacleFX : MonoBehaviour
         m_particleSystem.Stop();
     }
     [SerializeField]
-    async Task Play()
+    public async Task Play()
     {
         if(m_particleSystem == null)
         {
