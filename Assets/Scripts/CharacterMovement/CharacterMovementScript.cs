@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public AudioSource deathSFX; // Son de mort du joueur
     public AudioSource jumpSFX; // Son de saut du joueur
     public AudioSource doubleJumpSFX; // Son de double saut du joueur
+    public AudioSource jumpPadSFX; // Son du JumpPad
     private ScrollManager gameManager;
     private MusicManager musicManager;
 
@@ -215,8 +216,8 @@ public class PlayerController : MonoBehaviour
         animator.SetTrigger("Jump");
         canDoubleJump = true; // Permet un double saut après un saut normal
     
-    
-        }
+        jumpPadSFX.Play();
+    }
 
     public void triggerDeath() {
         isDead = true;
