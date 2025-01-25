@@ -18,28 +18,10 @@ public class ThemeManager : MonoBehaviour
 
     public void ApplyTheme(Theme theme)
     {
+        // Désactiver les objets des thèmes qui ne correspondent pas au thème actuel
         foreach (Theme t in System.Enum.GetValues(typeof(Theme)))
         {
-            if (t != theme)
-            {
-                string tag = t.ToString();
-                GameObject[] objectsToDisable = GameObject.FindGameObjectsWithTag(tag);
-                Debug.Log("Disabling objects with tag: " + tag);
-                foreach (GameObject obj in objectsToDisable)
-                {
-                    Debug.Log("Disabling " + obj.name);
-                    obj.SetActive(false);
-                }
-            }
-        }
-
-        string currentTag = theme.ToString();
-        GameObject[] objectsToEnable = GameObject.FindGameObjectsWithTag(currentTag);
-        Debug.Log("Enabling objects with tag: " + currentTag);
-        foreach (GameObject obj in objectsToEnable)
-        {
-            Debug.Log("Enabling " + obj.name);
-            obj.SetActive(true);
+            ToggleThemeObjects(t, t == theme);
         }
     }
 
@@ -47,5 +29,35 @@ public class ThemeManager : MonoBehaviour
     {
         currentTheme = newTheme;
         ApplyTheme(currentTheme);
+    }
+
+    private void ToggleThemeObjects(Theme theme, bool enable)
+    {
+        string tag = theme.ToString();
+        GameObject[] objects = GameObject.FindGameObjectsWithTag(tag);
+
+        if (objects.Length > 0)
+        {
+            foreach (GameObject obj in objects)
+            {
+                Debug.LogError("Found object with tag: " + tag);
+                if (enable)
+                {
+                    Debug.Log("Enabling " + obj.name + " with tag: " + tag);
+                    obj.SetActive(true);
+                    obj.active = true;
+                }
+                else
+                {
+                    Debug.Log("Disabling " + obj.name + " with tag: " + tag);
+                    obj.SetActive(false);
+                    obj.active = false;
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No objects found with tag: " + tag);
+        }
     }
 }

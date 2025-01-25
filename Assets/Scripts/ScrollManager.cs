@@ -82,7 +82,7 @@ public class ScrollManager : MonoBehaviour
 
     public void Update()
     {
-        if (playerController.isDead)
+        if (playerController != null && playerController.isDead)
         {
             gameState = GameState.GameOver;
         }
