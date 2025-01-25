@@ -16,6 +16,7 @@ public class DatabaseManager : MonoBehaviour
     private DatabaseReference m_database;
 
     private bool m_isLoaded = false;
+    private PlayerController player;
 
     void Start()
     {
@@ -52,7 +53,18 @@ public class DatabaseManager : MonoBehaviour
         }
 
         //TODO: Récupérer le score du joueur
-        int _score = 0; 
+        int _score = 0;
+
+        GameObject playerObject = GameObject.FindWithTag("Player");
+
+        if (playerObject != null)
+        {
+            player = playerObject.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                _score = player.score; // Récupérer le score
+            }
+        }
 
         //TODO: Récupérer les notes du joueur
         bool _note1 = false;
@@ -79,8 +91,9 @@ public class DatabaseManager : MonoBehaviour
     {
         while (!m_isLoaded)
         {
-            await Task.Delay(100);
+            await Task.Delay(500);
         }
+
         List<User> users = new List<User>();
 
         if (m_database == null)
@@ -92,13 +105,39 @@ public class DatabaseManager : MonoBehaviour
         try
         {
             DataSnapshot snapshot = await m_database.Child("users").GetValueAsync();
-            foreach (DataSnapshot userSnapshot in snapshot.Children)
+            if (snapshot.Exists)
             {
-                foreach(DataSnapshot noteSnapshot in userSnapshot.Children)
+                foreach (DataSnapshot userIdSnap in snapshot.Children)
                 {
-                    User userData = JsonUtility.FromJson<User>(noteSnapshot.GetRawJsonValue());
-                    users.Add(userData);
+                    foreach (DataSnapshot userDataSnap in userIdSnap.Children)
+                    {
+                        string rawJson = userDataSnap.GetRawJsonValue();
+                        if (!string.IsNullOrEmpty(rawJson) && rawJson.Contains("{"))
+                        {
+                            User userData = JsonUtility.FromJson<User>(rawJson);
+                            if (userData != null)
+                            {
+                                users.Add(userData);
+                            }
+                        }
+                    }
                 }
+            }
+            else
+            {
+                Debug.LogWarning("No data found in the 'users' node.");
+            }
+        }
+        catch (FirebaseException e)
+        {
+            Debug.LogError("Failed to read the database: " + e.Message);
+            // Gestion des erreurs de réseau
+            if (e.ErrorCode == -24)
+            {
+                Debug.LogError("Network error: " + e.Message);
+                // Réessayer la lecture après un délai
+                await Task.Delay(2000);
+                return await GetAllUsersAsync();
             }
         }
         catch (Exception e)
@@ -108,6 +147,11 @@ public class DatabaseManager : MonoBehaviour
 
         return users;
     }
+
+
+
+
+
 
     
 }

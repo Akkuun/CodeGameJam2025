@@ -152,8 +152,5 @@ public class ScrollManager : MonoBehaviour
             // Ajuste leur position en fonction du d�calage
             obj.AdjustPosition(offset);
         }
-
-        // R�initialise la distance d�fil�e
-        resetDistance();
     }
 }
