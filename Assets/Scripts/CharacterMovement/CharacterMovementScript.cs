@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     private float[] previousY; // Position Y précédente du personnage
     private bool isJumping = false; // Indique si le joueur est en train de sauter
     private bool canSingleJump = false; // Indique si un saut simple est possible
+    private InteractableObstacleFX interactableObstacleFX = null;
 
 
     private bool canDoubleJump = false; // Indique si le joueur peut effectuer un double saut
@@ -60,8 +61,6 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-
-        Debug.Log(" Hello " + secondJumpForce);
         if (gameManager.gameState == GameState.Title || gameManager.gameState == GameState.GameOver)
         {
             return;
@@ -76,10 +75,9 @@ public class PlayerController : MonoBehaviour
         //Double saut
         if (Input.GetKeyDown(KeyCode.UpArrow) && !isGrounded && canDoubleJump && !isSliding)
         {
-            Debug.Log(secondJumpForce); 
             DoubleJump(secondJumpForce);
         }
-        else if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded && !isSliding)
+        else if (Input.GetKeyDown(KeyCode.UpArrow) && !isSliding)
         {
             Jump(jumpForce);
             //canSingleJump = false; // Désactive le saut simple jusqu'à ce que le joueur touche le sol
@@ -107,8 +105,12 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, force); // Utilisation de rb.velocity pour appliquer la force du saut
-            animator.SetTrigger("Jump");
+            animator.SetBool("Jumping", false);
             jumpSFX.Play();
+        }
+        else
+        {
+            animator.SetBool("Jumping", true);
         }
 
         
@@ -117,17 +119,18 @@ public class PlayerController : MonoBehaviour
     // Double saut
     void DoubleJump(float force)
     {
-
-        Debug.Log(force);
         if (canDoubleJump)
         {
-
             //rb.AddForce(new Vector2(0, force - rb.linearVelocity.y), ForceMode2D.Impulse);
             //Debug.Log(force);
             //animator.SetTrigger("DoubleJump");
             //canDoubleJump = false; // Désactive le double saut après utilisation
             //rb.linearVelocity = new Vector2(0, 0);
             rb.linearVelocity = new Vector2(0, force);
+            if (interactableObstacleFX != null)
+            {
+                interactableObstacleFX.Play();
+            }
 
             animator.SetTrigger("DoubleJump");
             canDoubleJump = false;
@@ -149,7 +152,7 @@ public class PlayerController : MonoBehaviour
         isSliding = true;
 
         // Détection d'un objet cassable devant le joueur
-        animator.SetTrigger("Slide");
+        animator.SetBool("Sliding", true);
 
         // Réduit temporairement la taille du collider pour simuler la glissade
         Vector2 originalSize = normalCollider.size;
@@ -161,6 +164,7 @@ public class PlayerController : MonoBehaviour
         normalCollider.size = originalSize;
 
         isSliding = false;
+        animator.SetBool("Sliding", false);
     }
 
     void UpdateGrounded()
@@ -208,12 +212,12 @@ public class PlayerController : MonoBehaviour
         // Détection de l'objet de double saut
         if (collision.tag == "DoubleJumpObject")
         {
+            interactableObstacleFX = collision.GetComponent<InteractableObstacleFX>();
             canDoubleJump = true;
         }
         //detection avec un Jumping pad
         if (normalCollider.IsTouching(collision) && collision.GetComponent<JumpingPadObject>() != null)
         {
-           
             ActivateJumpPad(25f); // Appliquer l'effet du JumpPad
         }
 
@@ -236,6 +240,7 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == "DoubleJumpObject")
         {
             canDoubleJump = false;
+            interactableObstacleFX = null;
         }
 
         if (collision.GetComponent<DoubleJumpObsttacle>() != null)
@@ -280,7 +285,7 @@ public class PlayerController : MonoBehaviour
     {
         // Applique une force verticale spécifique pour le JumpPad
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, 45); // Utilisation de rb.velocity pour appliquer la force du saut
-        animator.SetTrigger("Jump");
+        animator.SetBool("Jumping", true);
         //canDoubleJump = true; // Permet un double saut après un saut normal
     
         jumpPadSFX.Play();
