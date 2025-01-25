@@ -490,7 +490,7 @@ Transform:
   m_GameObject: {fileID: 1551481450}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -85.07, y: -0.03999996, z: 0}
+  m_LocalPosition: {x: -75.64, y: -0.57, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -630,6 +630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleportDestination: {fileID: 1551481451}
+  scrollManager: {fileID: 0}
   useTeleportEffect: 0
   teleportEffect: {fileID: 0}
 --- !u!212 &1656349096
@@ -1088,7 +1089,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1382552315896255273, guid: 8ea0ab3f8163d455ebfcd75803a11bfd, type: 3}
       propertyPath: m_LocalScale.x
-      value: 90.35365
+      value: 266.11
       objectReference: {fileID: 0}
     - target: {fileID: 1382552315896255273, guid: 8ea0ab3f8163d455ebfcd75803a11bfd, type: 3}
       propertyPath: m_LocalPosition.x
