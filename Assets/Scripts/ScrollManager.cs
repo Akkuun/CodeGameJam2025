@@ -10,12 +10,6 @@ public enum GameState {
     GameOver,
 }
 
-public enum LevelStyle {
-    Modern,
-    Medieval,
-    SF,
-}
-
 [CreateAssetMenu(fileName = "SpeedManager", menuName = "Scriptable Objects/SpeedManager")]
 public class ScrollManager : MonoBehaviour
 {
@@ -28,10 +22,13 @@ public class ScrollManager : MonoBehaviour
     [SerializeField] public float height;
     [SerializeField] public int segments; 
     [SerializeField] public int segmentDivisions;
+    [SerializeField] public NoteSpawner noteSpawner;
+    [SerializeField] public PlayerController playerController;
     private float audioLength = 56.904f;
     public float distanceScrolled { get; private set; }
     // public float elapsedTime { get; private set; }
     public GameState gameState = GameState.Title;
+    private MusicStyle currentTheme;
 
     private void Awake()
     {
@@ -84,6 +81,10 @@ public class ScrollManager : MonoBehaviour
 
     public void Update()
     {
+        if (playerController.isDead)
+        {
+            gameState = GameState.GameOver;
+        }
         switch (gameState)
         {
             case GameState.Title:
@@ -98,6 +99,8 @@ public class ScrollManager : MonoBehaviour
                 Scroll();
                 break;
             case GameState.GameOver:
+            // Display game over screen
+                Debug.Log("Game Over");
                 break;
         }
 
@@ -113,22 +116,29 @@ public class ScrollManager : MonoBehaviour
         resetDistance();
         musicManager = MusicManager.instance;
         musicManager.startIntroTrack();
+        instance.currentTheme = MusicStyle.None;
+        noteSpawner.spawnNote();
     }
 
     public void Scroll() {
         distanceScrolled += speed * Time.deltaTime;
     }
 
-    public void setTheme(LevelStyle style) {
-        switch (style)
-        {
-            case LevelStyle.Modern:
-                break;
-            case LevelStyle.Medieval:
-                break;
-            case LevelStyle.SF:
-                break;
-        }
+    public void setTheme(MusicStyle style, LayerType type) {
+        musicManager.setTheme(style, type);
+    }
+
+    public void startGame(Collectable note) {
+        gameState = GameState.Game;
+        instance.currentTheme = note.musicStyle;
+        Debug.Log($"Calling startGame with {currentTheme}, {note.musicStyle}, {note.layerType}");
+        musicManager.startSegment(note.musicStyle, currentTheme, note.layerType);
+    }
+
+    public void startSegment(Collectable note) {
+        //Debug.Log($"Calling startSegment with {currentTheme}, {note.musicStyle}, {note.layerType}");
+        musicManager.startSegment(note.musicStyle, currentTheme, note.layerType);
+        instance.currentTheme = note.musicStyle;
     }
 
     public void AdjustObjectsAfterTeleport(float offset)

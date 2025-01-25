@@ -26,7 +26,12 @@ public class PlayerController : MonoBehaviour
     public BoxCollider2D normalCollider; // Collider standard du personnage
     public bool isDead = false; // variable connue de tous pour savoir quand le joueur meurt
     public bool isSliding = false; // variable connue de tous pour savoir quand le joueur glisse
+    public AudioSource deathSFX; // Son de mort du joueur
+    public AudioSource jumpSFX; // Son de saut du joueur
+    public AudioSource doubleJumpSFX; // Son de double saut du joueur
+    public AudioSource jumpPadSFX; // Son du JumpPad
     private ScrollManager gameManager;
+    private MusicManager musicManager;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -48,6 +53,7 @@ public class PlayerController : MonoBehaviour
         previousY[0] = transform.position.y;
         previousY[1] = float.MaxValue;
         gameManager = ScrollManager.instance;
+        musicManager = MusicManager.instance;
         levelPosition = 0;
     }
 
@@ -102,6 +108,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, force); // Utilisation de rb.velocity pour appliquer la force du saut
             animator.SetTrigger("Jump");
+            jumpSFX.Play();
         }
 
         
@@ -124,6 +131,7 @@ public class PlayerController : MonoBehaviour
 
             animator.SetTrigger("DoubleJump");
             canDoubleJump = false;
+            doubleJumpSFX.Play();
         }
         
     }
@@ -245,7 +253,7 @@ public class PlayerController : MonoBehaviour
         BreakableObjectDetected = false; // Réinitialise la détection
 
         foreach (var hitCollider in hitColliders)
-        {
+        { 
             if (hitCollider != null && hitCollider.GetComponent<Breakable>() != null)
             {
                 // Si un objet de type Breakable est trouvé, on met à jour la variable
@@ -258,6 +266,10 @@ public class PlayerController : MonoBehaviour
 
     void CheckIfPlayerIsDead()
     {
+        if (gameObject.transform.position.x < -0.1)
+        {
+            triggerDeath();
+        }
         if (isDead)
         {
            // Debug.Log("Le joueur est MORT");
@@ -272,6 +284,14 @@ public class PlayerController : MonoBehaviour
         //canDoubleJump = true; // Permet un double saut après un saut normal
         Debug.Log("heh");
     
-    
-        }
+        jumpPadSFX.Play();
+    }
+
+    public void triggerDeath() {
+        isDead = true;
+        gameManager.gameState = GameState.GameOver;
+        musicManager.StopAllCoroutines();
+        musicManager.stopAll();
+        deathSFX.Play();
+    }
 }
