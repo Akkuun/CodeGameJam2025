@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1120988122201298318}
   - component: {fileID: 27956738086177102}
   - component: {fileID: 3001639557773891097}
-  - component: {fileID: 6499314222239465256}
+  - component: {fileID: 2013710839574656742}
   m_Layer: 0
   m_Name: CharacterPrefab
   m_TagString: Untagged
@@ -61,7 +61,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 49ce490b6121a4f4580f25019f47429d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -82,15 +82,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 7191746842954658244, guid: 72491a66be0984844858015fe6994fa3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 1.0001954}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &1120988122201298318
@@ -157,10 +157,10 @@ BoxCollider2D:
   m_Offset: {x: 0.07804467, y: -1.3341335}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1.0001954}
+    newSize: {x: 1, y: 1.0001954}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
@@ -178,12 +178,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a3edcf09c913d746a2f41175326ced0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 0
+  levelPosition: 0
+  explosionSource: {fileID: 0}
   jumpForce: 30
   secondJumpForce: 8
   slideDuration: 0.5
   breakableCheckRadius: 0.2
   objectDetectionDistance: 1
-  groundCheck: {fileID: 0}
+  groundCheck: {fileID: 7800142913270284846}
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -194,7 +197,11 @@ MonoBehaviour:
   normalCollider: {fileID: 27956738086177102}
   isDead: 0
   isSliding: 0
---- !u!95 &6499314222239465256
+  deathSFX: {fileID: 0}
+  jumpSFX: {fileID: 0}
+  doubleJumpSFX: {fileID: 0}
+  jumpPadSFX: {fileID: 0}
+--- !u!95 &2013710839574656742
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
@@ -242,7 +249,7 @@ Transform:
   m_GameObject: {fileID: 4229425607691388479}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.06, y: -1.32, z: -0.06368585}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -293,15 +300,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.6855345, g: 0.07976332, b: 0.07976332, a: 1}
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &6730597376756972922

@@ -1,22 +1,64 @@
+using System;
 using UnityEngine;
 
-enum MusicStyle {
+public enum MusicStyle {
     Modern,
     Medieval,
     SF,
+    None
 }
+
+public enum LayerType {
+    Melo1,
+    Melo2,
+    Perc,
+    Acc
+}
+
 
 public class MusicManager : MonoBehaviour
 {
     public static MusicManager instance;
-    public float elapsedTime;
+
+    [Header("Intro music")]
     [SerializeField] public AudioSource introAudioSource;
-    [SerializeField] public AudioSource[] audioSources;
+    [Header("Music layers")]
+    [SerializeField] public AudioSource[] me_audioSources;
+    [SerializeField] public AudioSource[] mo_audioSources;
+    [SerializeField] public AudioSource[] sf_audioSources;
+    [Header("Références")]
     [SerializeField] public ScrollManager scrollManager;
     //private float diffSum;
     //private float diffCount;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // 0: Melo1, 1: Melo2, 2: Perc, 3: Acc
+    public MusicStyle[] layersUnlocked = new MusicStyle[4]; 
+
+    private AudioSource[] getAudioSourceFromStyle(MusicStyle style) {
+        if (style == MusicStyle.Modern) {
+            return mo_audioSources;
+        } else if (style == MusicStyle.Medieval) {
+            return me_audioSources;
+        } else if (style == MusicStyle.SF) {
+            return sf_audioSources;
+        }
+        return null;
+    }
+
+    public void unlockLayer(MusicStyle style, LayerType layer) {
+            layersUnlocked[(int)layer] = style;
+    }
+
+    public void startSegment(MusicStyle percStyle, MusicStyle newLayerStyle, LayerType newLayer) {
+        // Starting segment, only the perc layer is changed, with the starting style of the segment
+        if (newLayerStyle != MusicStyle.None) {
+            layersUnlocked[(int)newLayer] = newLayerStyle;
+        } else {
+            stopIntroTrack();
+        }
+        layersUnlocked[2] = percStyle;
+        playAll();
+    }
 
     private void Awake()
     {
@@ -32,39 +74,92 @@ public class MusicManager : MonoBehaviour
     }
     void Start()
     {
-        foreach(AudioSource audioSource in audioSources)
+        introAudioSource.loop = true;
+        introAudioSource.playOnAwake = true;
+        foreach(AudioSource audioSource in me_audioSources)
         {
             audioSource.loop = false;
-            audioSource.Play();
+            audioSource.playOnAwake = false;
+            audioSource.volume = 1;
+        }
+        foreach(AudioSource audioSource in mo_audioSources)
+        {
+            audioSource.loop = false;
+            audioSource.playOnAwake = false;
+            audioSource.volume = 1;
+        }
+        foreach(AudioSource audioSource in sf_audioSources)
+        {
+            audioSource.loop = false;
+            audioSource.playOnAwake = false;
+            audioSource.volume = 1;
         }
         //introAudioSource.Play();
         scrollManager = ScrollManager.instance;
-        //diffCount = 0;
-        //diffSum = 0;
-        elapsedTime = 0;
-        Debug.Log("Audio total duration : " + audioSources[0].clip.length);
+        layersUnlocked[0] = MusicStyle.None;
+        layersUnlocked[1] = MusicStyle.None;
+        layersUnlocked[2] = MusicStyle.None;
+        layersUnlocked[3] = MusicStyle.None;
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*
-        elapsedTime += Time.deltaTime;
-        float thDistance = scrollManager.getTheoreticalDistance(elapsedTime);
-        float realDistance = scrollManager.distanceScrolled;
-        float diff = thDistance - realDistance;
-        */
-        //diffCount++;
-        //diffSum += diff;
-        //audioSources[0].time -= diff;
-        // if (diffCount % 100 == 0)
-        // {
-        //     Debug.Log($"Average diff: {diffSum / diffCount}");
-        // }
-        //Debug.Log($"Theoretical distance: {thDistance} Real distance: {realDistance} Diff : {diff}");
+
     }
 
     public void startDebugTrack() {
-        //
+        // Use CTRL + P To execute code here
+        stopAll();
+    }
+
+    public void startIntroTrack() {
+        introAudioSource.Play();
+    }
+
+    public void stopIntroTrack() {
+        introAudioSource.Stop();
+    }
+
+    private void playAll() {
+        for (int i = 0; i < 4; i++) {
+            if (layersUnlocked[i] != MusicStyle.None) {
+                AudioSource[] audioSources = getAudioSourceFromStyle(layersUnlocked[i]);
+                audioSources[i].volume = 1;
+                audioSources[i].time = 0;
+                audioSources[i].Play();
+            }
+        }
+    }
+
+    public void stopAll() {
+        for (int i = 0; i < 4; i++) {
+            if (layersUnlocked[i] != MusicStyle.None) {
+                AudioSource[] audioSources = getAudioSourceFromStyle(layersUnlocked[i]);
+                audioSources[i].Stop();
+            }
+        }
+    }
+
+    public void setTheme(MusicStyle style, LayerType type) {
+        unlockLayer(style, type);
+    }
+
+    public bool firstSegment() {
+        return layersUnlocked[0] == MusicStyle.None && layersUnlocked[1] == MusicStyle.None && layersUnlocked[3] == MusicStyle.None;
+    }
+
+    public MusicStyle[] getUnlockedLayers() {
+        return layersUnlocked;
+    }
+
+    public LayerType[] getLayersStillNone() {
+        LayerType[] layers = new LayerType[4];
+        for (int i = 0; i < 4; i++) {
+            if (layersUnlocked[i] == MusicStyle.None) {
+                layers[i] = (LayerType)i;
+            }
+        }
+        return layers;
     }
 }

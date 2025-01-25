@@ -15,8 +15,19 @@ public class ScrollableObject : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        transform.position += Vector3.left * speedManager.GetSpeed() * Time.deltaTime;
-
+        switch (speedManager.gameState)
+        {
+            case GameState.Title:
+                break;
+            case GameState.Tutorial:
+            case GameState.Game:
+            case GameState.SegmentTransition:
+                Scroll();
+                break;
+            case GameState.GameOver:
+                break;
+        }
+        
         /*
         if (transform.position.x <= destroyX)
         {
@@ -25,9 +36,13 @@ public class ScrollableObject : MonoBehaviour
         */
     }
 
+    public void Scroll() {
+        transform.position += Vector3.left * speedManager.GetSpeed() * Time.deltaTime;
+    }
+    
     public void AdjustPosition(float offset)
     {
-        // Ajuste la position en ajoutant un décalage
+        // Ajuste la position en ajoutant un dÃ©calage
         transform.position = new Vector3(transform.position.x - offset, transform.position.y, transform.position.z);
     }
 }

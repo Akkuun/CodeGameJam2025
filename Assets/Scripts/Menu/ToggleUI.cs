@@ -9,9 +9,15 @@ using UnityEngine;
 public class ToggleUI : MonoBehaviour
 {
     [SerializeField] private GameObject textsPanel; 
+    [SerializeField] private ScrollManager gameManager;
     private KeyCode toggleKey = KeyCode.UpArrow; // Jump to start game and remove UI text
 
     private bool isVisible = true;
+
+    void Start()
+    {
+        gameManager = ScrollManager.instance;
+    }
 
     void Update()
     {
@@ -25,6 +31,8 @@ public class ToggleUI : MonoBehaviour
 
         if (Input.GetKeyDown(toggleKey))
         {
+
+            gameManager.gameState = GameState.Tutorial;
             isVisible = false;
             textsPanel.SetActive(isVisible);
         }

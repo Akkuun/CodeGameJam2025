@@ -2,6 +2,14 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
+public enum GameState {
+    Title,
+    Tutorial,
+    Game,
+    SegmentTransition,
+    GameOver,
+}
+
 [CreateAssetMenu(fileName = "SpeedManager", menuName = "Scriptable Objects/SpeedManager")]
 public class ScrollManager : MonoBehaviour
 {
@@ -14,10 +22,13 @@ public class ScrollManager : MonoBehaviour
     [SerializeField] public float height;
     [SerializeField] public int segments; 
     [SerializeField] public int segmentDivisions;
+    [SerializeField] public NoteSpawner noteSpawner;
+    [SerializeField] public PlayerController playerController;
     private float audioLength = 56.904f;
     public float distanceScrolled { get; private set; }
     // public float elapsedTime { get; private set; }
-
+    public GameState gameState = GameState.Title;
+    private MusicStyle currentTheme;
 
     private void Awake()
     {
@@ -70,8 +81,29 @@ public class ScrollManager : MonoBehaviour
 
     public void Update()
     {
-        //elapsedTime += Time.deltaTime;
-        distanceScrolled += speed * Time.deltaTime;
+        if (playerController.isDead)
+        {
+            gameState = GameState.GameOver;
+        }
+        switch (gameState)
+        {
+            case GameState.Title:
+                break;
+            case GameState.Tutorial:
+                Scroll();
+                break;
+            case GameState.Game:
+                Scroll();
+                break;
+            case GameState.SegmentTransition:
+                Scroll();
+                break;
+            case GameState.GameOver:
+            // Display game over screen
+                Debug.Log("Game Over");
+                break;
+        }
+
 
         if (Input.GetKey(KeyCode.P) && Input.GetKey(KeyCode.LeftControl))
         {
@@ -83,21 +115,42 @@ public class ScrollManager : MonoBehaviour
     {
         resetDistance();
         musicManager = MusicManager.instance;
+        musicManager.startIntroTrack();
+        instance.currentTheme = MusicStyle.None;
+        noteSpawner.spawnNote();
+    }
+
+    public void Scroll() {
+        distanceScrolled += speed * Time.deltaTime;
+    }
+
+    public void setTheme(MusicStyle style, LayerType type) {
+        musicManager.setTheme(style, type);
+    }
+
+    public void startGame(Collectable note) {
+        gameState = GameState.Game;
+        instance.currentTheme = note.musicStyle;
+        Debug.Log($"Calling startGame with {currentTheme}, {note.musicStyle}, {note.layerType}");
+        musicManager.startSegment(note.musicStyle, currentTheme, note.layerType);
+    }
+
+    public void startSegment(Collectable note) {
+        //Debug.Log($"Calling startSegment with {currentTheme}, {note.musicStyle}, {note.layerType}");
+        musicManager.startSegment(note.musicStyle, currentTheme, note.layerType);
+        instance.currentTheme = note.musicStyle;
     }
 
     public void AdjustObjectsAfterTeleport(float offset)
     {
         Debug.Log("Adujst");
-        // Récupère tous les objets défilants dans la scène
+        // Rï¿½cupï¿½re tous les objets dï¿½filants dans la scï¿½ne
         ScrollableObject[] scrollableObjects = FindObjectsOfType<ScrollableObject>();
         foreach (var obj in scrollableObjects)
         {
 
-            // Ajuste leur position en fonction du décalage
+            // Ajuste leur position en fonction du dï¿½calage
             obj.AdjustPosition(offset);
         }
-
-        // Réinitialise la distance défilée
-        resetDistance();
     }
 }
