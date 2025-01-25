@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
+    public float deathDistance = 12.5;
     public int score;
     public int levelPosition = 0;
     public AudioSource explosionSource;
@@ -30,10 +30,13 @@ public class PlayerController : MonoBehaviour
     public AudioSource jumpSFX; // Son de saut du joueur
     public AudioSource doubleJumpSFX; // Son de double saut du joueur
     public AudioSource jumpPadSFX; // Son du JumpPad
+
+    public Camera camera;
     private ScrollManager gameManager;
     private MusicManager musicManager;
     public ParticleSystem deathEffect; // Effet de mort du joueur
     public SpriteRenderer spriteRenderer; // Sprite du joueur
+
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -63,6 +66,9 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
+        if (camera != null) camera.transform.position = new Vector2(0, camera.transform.position.y);
+
+
 
         if (isDead && deathEffect.isStopped)
         {
@@ -286,7 +292,8 @@ public class PlayerController : MonoBehaviour
 
     void CheckIfPlayerIsDead()
     {
-        if (gameObject.transform.position.x < -0.1)
+        Debug.Log(gameObject.transform.position.x);
+        if (gameObject.transform.position.x < -deathDistance)
         {
             triggerDeath();
         }
