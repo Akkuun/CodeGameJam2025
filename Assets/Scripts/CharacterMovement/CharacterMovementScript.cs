@@ -115,7 +115,6 @@ public class PlayerController : MonoBehaviour
         if (ScrollManager.instance != null)
         {
             floatScore += ScrollManager.instance.speed * Time.deltaTime;
-            Debug.Log(floatScore);
             ScrollManager.instance.score = Mathf.FloorToInt(floatScore);
             score = Mathf.FloorToInt(floatScore);
         }

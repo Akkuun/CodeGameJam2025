@@ -1,34 +1,10 @@
 fileFormatVersion: 2
-guid: c3791e8bf6f27b14381321b4ab09db14
+guid: 12a94e69d62ac7943a39b03b53e4a345
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4369572136041557648
-    second: title_0
-  - first:
-      213: 3918735734063839423
-    second: title_1
-  - first:
-      213: 8126443836680682420
-    second: title_2
-  - first:
-      213: -1799187036485144362
-    second: title_3
-  - first:
-      213: 6959973565247811803
-    second: title_4
-  - first:
-      213: 8208922059937784112
-    second: title_5
-  - first:
-      213: -4093714307795105667
-    second: title_6
-  - first:
-      213: -2490043832354904171
-    second: title_7
-  - first:
-      213: 2170485668361454577
-    second: title_8
+      213: -5843820215160402864
+    second: title_s_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -124,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: title_0
+      name: title_s_0
       rect:
         serializedVersion: 2
         x: 0
@@ -132,15 +108,15 @@ TextureImporter:
         width: 512
         height: 256
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: e69322c46f1a07b4abc3c6a7dd1e2c77
-      internalID: -1754789809
+      spriteID: 05c0e18e97496eea0800000000000000
+      internalID: -5843820215160402864
       vertices: []
       indices: 
       edges: []
@@ -149,19 +125,16 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7acaed71afe73024da16d92b376f249a
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures:
-    - texture: {fileID: 2800000, guid: 12a94e69d62ac7943a39b03b53e4a345, type: 3}
-      name: _EmissionMap
+    secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      title_0: -1754789809
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

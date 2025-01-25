@@ -12,7 +12,7 @@ public class ToggleGameOverUI : MonoBehaviour
     private KeyCode toggleKey = KeyCode.UpArrow; // Jump to start game and remove UI text
 
     private bool isVisible = true;
-    private TMP_Text scoreText;
+    public TMP_Text scoreText;
 
     void Start()
     {
