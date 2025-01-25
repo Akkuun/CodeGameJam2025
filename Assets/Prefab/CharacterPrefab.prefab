@@ -186,7 +186,7 @@ MonoBehaviour:
   slideDuration: 0.5
   breakableCheckRadius: 0.2
   objectDetectionDistance: 1
-  groundCheck: {fileID: 0}
+  groundCheck: {fileID: 7800142913270284846}
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -197,6 +197,10 @@ MonoBehaviour:
   normalCollider: {fileID: 27956738086177102}
   isDead: 0
   isSliding: 0
+  deathSFX: {fileID: 0}
+  jumpSFX: {fileID: 0}
+  doubleJumpSFX: {fileID: 0}
+  jumpPadSFX: {fileID: 0}
 --- !u!95 &2013710839574656742
 Animator:
   serializedVersion: 7
