@@ -62,7 +62,7 @@ public class DatabaseManager : MonoBehaviour
             player = playerObject.GetComponent<PlayerController>();
             if (player != null)
             {
-                _score = player.score; // Récupérer le score
+                _score = ScrollManager.instance.score;
             }
         }
 

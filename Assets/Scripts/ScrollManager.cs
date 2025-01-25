@@ -24,6 +24,7 @@ public class ScrollManager : MonoBehaviour
     [SerializeField] public int segmentDivisions;
     [SerializeField] public NoteSpawner noteSpawner;
     [SerializeField] public PlayerController playerController;
+    public int score;
     private float audioLength = 56.904f;
     public float distanceScrolled { get; private set; }
     // public float elapsedTime { get; private set; }
