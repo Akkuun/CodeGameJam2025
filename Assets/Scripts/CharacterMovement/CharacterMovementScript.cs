@@ -131,7 +131,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, force); // Utilisation de rb.velocity pour appliquer la force du saut
             animator.SetBool("Jumping", false);
-            jumpSFX.pitch = Random.range(0.9, 1.1);
+            jumpSFX.pitch = UnityEngine.Random.range(0.9, 1.1);
             jumpSFX.Play();
         }
         else
@@ -155,13 +155,13 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(0, force);
             if (interactableObstacleFX != null)
             {
-                interactableObstacleFX.pitch = Random.range(0.9, 1.1);
+                interactableObstacleFX.pitch = UnityEngine.Random.range(0.9, 1.1);
                 interactableObstacleFX.Play();
             }
 
             animator.SetTrigger("DoubleJump");
             canDoubleJump = false;
-            doubleJumpSFX.pitch = Random.Range(0.9, 1.1);
+            doubleJumpSFX.pitch = UnityEngine.Random.Range(0.9, 1.1);
             doubleJumpSFX.Play();
         }
         
@@ -317,7 +317,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Jumping", true);
         //canDoubleJump = true; // Permet un double saut après un saut normal
         Debug.Log("heh");
-        jumpPadSFX.pitch = Random.Range(0.9, 1.1);
+        jumpPadSFX.pitch = UnityEngine.Random.Range(0.9, 1.1);
         jumpPadSFX.Play();
     }
 
@@ -327,7 +327,7 @@ public class PlayerController : MonoBehaviour
         gameManager.gameState = GameState.GameOver;
         musicManager.StopAllCoroutines();
         musicManager.stopAll();
-        deathSFX.pitch = Random.Range(0.9, 1.1);
+        deathSFX.pitch = UnityEngine.Random.Range(0.9, 1.1);
         deathSFX.Play();
         deathEffect.Play();
         spriteRenderer.enabled = false;
