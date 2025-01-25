@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class NoteSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject notePrefab;
+    [SerializeField] private GameObject[] notePrefab;
     [SerializeField] private Transform[] spawnPoints = new Transform[3];
     private bool canSpawn = true;
     private MusicManager musicManager;
@@ -27,9 +27,9 @@ public class NoteSpawner : MonoBehaviour
         //Debug.Log($"Spawning note : {canSpawn}, first segment : {musicManager.firstSegment()}");
         if (!canSpawn) return;
 
-        GameObject note0 = Instantiate(notePrefab, spawnPoints[0].position, Quaternion.identity);
-        GameObject note1 = Instantiate(notePrefab, spawnPoints[1].position, Quaternion.identity);
-        GameObject note2 = Instantiate(notePrefab, spawnPoints[2].position, Quaternion.identity);
+        GameObject note0 = Instantiate(notePrefab[0], spawnPoints[0].position, Quaternion.identity);
+        GameObject note1 = Instantiate(notePrefab[1], spawnPoints[1].position, Quaternion.identity);
+        GameObject note2 = Instantiate(notePrefab[2], spawnPoints[2].position, Quaternion.identity);
         GameObject[] notesToSetup = {note0, note1, note2};
         if (musicManager.firstSegment()) {
             MusicStyle[] styles = {MusicStyle.Modern, MusicStyle.Medieval, MusicStyle.SF};
