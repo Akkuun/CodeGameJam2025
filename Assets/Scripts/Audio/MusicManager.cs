@@ -28,6 +28,7 @@ public class MusicManager : MonoBehaviour
     [SerializeField] public AudioSource[] sf_audioSources;
     [Header("Références")]
     [SerializeField] public ScrollManager scrollManager;
+    private int segmentPassed = 0;
     //private float diffSum;
     //private float diffCount;
 
@@ -50,6 +51,7 @@ public class MusicManager : MonoBehaviour
     }
 
     public void startSegment(MusicStyle percStyle, MusicStyle newLayerStyle, LayerType newLayer) {
+        segmentPassed++;
         // Starting segment, only the perc layer is changed, with the starting style of the segment
         if (newLayerStyle != MusicStyle.None) {
             layersUnlocked[(int)newLayer] = newLayerStyle;
@@ -100,6 +102,7 @@ public class MusicManager : MonoBehaviour
         layersUnlocked[1] = MusicStyle.None;
         layersUnlocked[2] = MusicStyle.None;
         layersUnlocked[3] = MusicStyle.None;
+        segmentPassed = 0;
     }
 
     // Update is called once per frame
@@ -146,7 +149,7 @@ public class MusicManager : MonoBehaviour
     }
 
     public bool firstSegment() {
-        return layersUnlocked[0] == MusicStyle.None && layersUnlocked[1] == MusicStyle.None && layersUnlocked[3] == MusicStyle.None;
+        return segmentPassed == 0;
     }
 
     public MusicStyle[] getUnlockedLayers() {
