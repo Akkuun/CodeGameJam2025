@@ -30,9 +30,9 @@ Transform:
   m_GameObject: {fileID: 2840208117042602030}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04234646, y: -1.79, z: 0.06368585}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5549984851269727270}
   - {fileID: 8542694836938445756}
@@ -154,7 +154,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.07804467, y: -1.3341335}
+  m_Offset: {x: 0.07804465, y: -0.004047632}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -164,7 +164,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.1336391, y: 1.1481943}
+  m_Size: {x: 1.1336391, y: 1.0414133}
   m_EdgeRadius: 0
 --- !u!114 &3001639557773891097
 MonoBehaviour:
@@ -186,7 +186,7 @@ MonoBehaviour:
   slideDuration: 0.5
   breakableCheckRadius: 0.2
   objectDetectionDistance: 1
-  groundCheck: {fileID: 0}
+  groundCheck: {fileID: 7800142913270284846}
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -197,6 +197,10 @@ MonoBehaviour:
   normalCollider: {fileID: 27956738086177102}
   isDead: 0
   isSliding: 0
+  deathSFX: {fileID: 0}
+  jumpSFX: {fileID: 0}
+  doubleJumpSFX: {fileID: 0}
+  jumpPadSFX: {fileID: 0}
 --- !u!95 &2013710839574656742
 Animator:
   serializedVersion: 7
@@ -333,7 +337,7 @@ Transform:
   m_GameObject: {fileID: 6730597376756972922}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.24, y: -1.31, z: -0.02258195}
+  m_LocalPosition: {x: 2.24, y: -0.01, z: -0.02258195}
   m_LocalScale: {x: 3.24, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
