@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        Debug.Log(" Hello " + secondJumpForce);
+//        Debug.Log(" Hello " + secondJumpForce);
         if (gameManager.gameState == GameState.Title || gameManager.gameState == GameState.GameOver)
         {
             return;
@@ -166,7 +166,7 @@ public class PlayerController : MonoBehaviour
     void UpdateGrounded()
     {
         RaycastHit2D[] raytab = new RaycastHit2D[1];
-        int t = normalCollider.Raycast(new Vector2(0, -1), raytab, 0.75f);
+        int t = normalCollider.Raycast(new Vector2(0, -1), raytab, 1.2f/2f);
         isGrounded = t > 0 && !(raytab[0].collider.tag == "DoubleJumpObject");
 
 
@@ -279,9 +279,10 @@ public class PlayerController : MonoBehaviour
     public void ActivateJumpPad(float jumpPadForce)
     {
         // Applique une force verticale spécifique pour le JumpPad
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, 45); // Utilisation de rb.velocity pour appliquer la force du saut
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPadForce); // Utilisation de rb.velocity pour appliquer la force du saut
         animator.SetTrigger("Jump");
         //canDoubleJump = true; // Permet un double saut après un saut normal
+        Debug.Log("heh");
     
         jumpPadSFX.Play();
     }

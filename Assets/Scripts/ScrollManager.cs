@@ -137,6 +137,7 @@ public class ScrollManager : MonoBehaviour
 
     public void startSegment(Collectable note) {
         //Debug.Log($"Calling startSegment with {currentTheme}, {note.musicStyle}, {note.layerType}");
+        
         musicManager.startSegment(note.musicStyle, currentTheme, note.layerType);
         instance.currentTheme = note.musicStyle;
     }

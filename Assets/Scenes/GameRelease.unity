@@ -5869,7 +5869,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1821668567
-  m_SortingLayer: -1
+  m_SortingLayer: -6
   m_SortingOrder: -8
   m_Sprite: {fileID: 5521783318225488043, guid: ae37affe9aee29c438f4500957fbea05, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -9770,7 +9770,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1821668567
-  m_SortingLayer: -1
+  m_SortingLayer: -6
   m_SortingOrder: -9
   m_Sprite: {fileID: 3282666846421575292, guid: ae37affe9aee29c438f4500957fbea05, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -24179,63 +24179,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8168442985267405382, guid: b0c21ddd558674844a9662bddfbcb2ff, type: 3}
   m_PrefabInstance: {fileID: 848159708}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1318320024
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1732984257140928443, guid: 4c25d465d8670fd47ba356a783855c59, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 193.53
-      objectReference: {fileID: 0}
-    - target: {fileID: 1732984257140928443, guid: 4c25d465d8670fd47ba356a783855c59, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.91
-      objectReference: {fileID: 0}
-    - target: {fileID: 1732984257140928443, guid: 4c25d465d8670fd47ba356a783855c59, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1732984257140928443, guid: 4c25d465d8670fd47ba356a783855c59, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1732984257140928443, guid: 4c25d465d8670fd47ba356a783855c59, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1732984257140928443, guid: 4c25d465d8670fd47ba356a783855c59, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1732984257140928443, guid: 4c25d465d8670fd47ba356a783855c59, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1732984257140928443, guid: 4c25d465d8670fd47ba356a783855c59, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1732984257140928443, guid: 4c25d465d8670fd47ba356a783855c59, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1732984257140928443, guid: 4c25d465d8670fd47ba356a783855c59, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7622405437891539426, guid: 4c25d465d8670fd47ba356a783855c59, type: 3}
-      propertyPath: m_Name
-      value: DoubleJumpObject
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4c25d465d8670fd47ba356a783855c59, type: 3}
 --- !u!4 &1319420185 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8168442985267405382, guid: b0c21ddd558674844a9662bddfbcb2ff, type: 3}
@@ -29834,7 +29777,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1821668567
-  m_SortingLayer: -1
+  m_SortingLayer: -6
   m_SortingOrder: -10
   m_Sprite: {fileID: -8563605157640978534, guid: ae37affe9aee29c438f4500957fbea05, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -33887,7 +33830,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1821668567
-  m_SortingLayer: -1
+  m_SortingLayer: -6
   m_SortingOrder: -11
   m_Sprite: {fileID: 8205216246602487950, guid: ae37affe9aee29c438f4500957fbea05, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -39201,7 +39144,6 @@ SceneRoots:
   - {fileID: 1108858333}
   - {fileID: 1538352785}
   - {fileID: 1387231922}
-  - {fileID: 1318320024}
   - {fileID: 1137158291}
   - {fileID: 1119813444}
   - {fileID: 333208107}

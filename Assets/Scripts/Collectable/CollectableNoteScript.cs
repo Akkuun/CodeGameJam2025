@@ -15,11 +15,7 @@ public class Collectable : MonoBehaviour
 
     void Update()
     {
-        if (transform.position.x < -15)
-        {
-            gameManager.noteSpawner.spawnNote();
-            Destroy(gameObject);
-        }
+ 
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -29,6 +25,7 @@ public class Collectable : MonoBehaviour
         if (player != null)
         {
             Debug.Log("Changing music");
+            gameManager.gameState = GameState.Game;
             gameManager.startSegment(this);
             DestroyAndResetSpawnCondition();
         }
