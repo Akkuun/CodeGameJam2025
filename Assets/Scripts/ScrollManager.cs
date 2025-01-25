@@ -81,6 +81,7 @@ public class ScrollManager : MonoBehaviour
 
     public void Update()
     {
+
         if (playerController.isDead)
         {
             gameState = GameState.GameOver;
@@ -121,6 +122,7 @@ public class ScrollManager : MonoBehaviour
     }
 
     public void Scroll() {
+        
         distanceScrolled += speed * Time.deltaTime;
     }
 

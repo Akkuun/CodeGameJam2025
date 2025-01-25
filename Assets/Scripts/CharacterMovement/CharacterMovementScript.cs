@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
 
     public int score;
+    private float floatScore; 
     public int levelPosition = 0;
     public AudioSource explosionSource;
 
@@ -93,7 +94,13 @@ public class PlayerController : MonoBehaviour
         // Score 
         if (ScrollManager.instance != null)
         {
-            score = Mathf.FloorToInt(ScrollManager.instance.distanceScrolled);
+
+
+            floatScore += ScrollManager.instance.speed * Time.deltaTime;
+            score = Mathf.FloorToInt(floatScore); 
+            //score = 10; 
+            Debug.Log(score); 
+            
         }
 
         //Debug.Log(isGrounded);
