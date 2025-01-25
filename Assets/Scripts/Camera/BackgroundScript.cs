@@ -10,7 +10,7 @@ public class BackgroundElement
 
 public class BackgroundScript : MonoBehaviour
 {
-    private const float SCROLL_MULTIPLIER = 0.01f;
+    private const float SCROLL_MULTIPLIER = 0.1f;
 
     [SerializeField] private BackgroundElement[] m_backgroundElements;
 
@@ -28,7 +28,7 @@ public class BackgroundScript : MonoBehaviour
         {
             Vector2 offset = element.m_material.GetVector("_Offset");
             offset.x = transform.position.x * element.m_scrollSpeed * SCROLL_MULTIPLIER;
-            offset.y = transform.position.y * element.m_scrollSpeed * SCROLL_MULTIPLIER;
+            offset.y = transform.position.y * element.m_scrollSpeed * SCROLL_MULTIPLIER / 40;
             element.m_material.SetVector("_Offset", offset);
         }
     }
