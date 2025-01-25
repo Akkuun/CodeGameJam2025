@@ -294,6 +294,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -1784,7 +1797,74 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      playerAnims_Normal_0: 2358770245751015504
+      playerAnims_Normal_1: 1347796289497828430
+      playerAnims_Normal_10: 4143190284154219785
+      playerAnims_Normal_11: 2042826240209634196
+      playerAnims_Normal_12: 5172591281194999590
+      playerAnims_Normal_13: 2218375164198224426
+      playerAnims_Normal_14: 8146026604167894814
+      playerAnims_Normal_15: 1161677882000277796
+      playerAnims_Normal_16: -4795871911353774060
+      playerAnims_Normal_17: -1207777590949700626
+      playerAnims_Normal_18: 7192471466074305065
+      playerAnims_Normal_19: 1499541706439076365
+      playerAnims_Normal_2: 5470762131414365400
+      playerAnims_Normal_20: 913268943372734100
+      playerAnims_Normal_21: -6511011439088646806
+      playerAnims_Normal_22: 5274901871784872800
+      playerAnims_Normal_23: -3688422568089145237
+      playerAnims_Normal_24: 3684897568271806330
+      playerAnims_Normal_25: -4539941523448001748
+      playerAnims_Normal_26: -6248931282752027382
+      playerAnims_Normal_27: -9182884472994025733
+      playerAnims_Normal_28: 8665433391492392561
+      playerAnims_Normal_29: -1078921349001463530
+      playerAnims_Normal_3: -8779442031743067431
+      playerAnims_Normal_30: 5889484293396439799
+      playerAnims_Normal_31: -672959443066389198
+      playerAnims_Normal_32: 5171904347241912555
+      playerAnims_Normal_33: 3478557866223235661
+      playerAnims_Normal_34: 6240181048811182244
+      playerAnims_Normal_35: 6811529878221001291
+      playerAnims_Normal_36: 7866832490726139468
+      playerAnims_Normal_37: -2455362451539110454
+      playerAnims_Normal_38: -6077460360770777182
+      playerAnims_Normal_39: 1708927624752877100
+      playerAnims_Normal_4: -4196892564331972384
+      playerAnims_Normal_40: 1969166943127278997
+      playerAnims_Normal_41: 5027029661091091206
+      playerAnims_Normal_42: 113425323081908962
+      playerAnims_Normal_43: -233233214160675906
+      playerAnims_Normal_44: 802001610595048592
+      playerAnims_Normal_45: 7110045240065539795
+      playerAnims_Normal_46: -4938825415710782289
+      playerAnims_Normal_47: 2435797110106253823
+      playerAnims_Normal_48: -3661424515644064655
+      playerAnims_Normal_49: 2626872637566960476
+      playerAnims_Normal_5: 4044318867246007290
+      playerAnims_Normal_50: 7696562418248497711
+      playerAnims_Normal_51: -8810745367974065447
+      playerAnims_Normal_52: -1150295798261951112
+      playerAnims_Normal_53: -2565949166014198645
+      playerAnims_Normal_54: -1745610938266463532
+      playerAnims_Normal_55: -2070948386345599466
+      playerAnims_Normal_56: 8188226948415718844
+      playerAnims_Normal_57: -3959765886491060231
+      playerAnims_Normal_58: 5708705499054121430
+      playerAnims_Normal_59: -7358708507762563206
+      playerAnims_Normal_6: -7051616261755671266
+      playerAnims_Normal_60: -7348408870840016536
+      playerAnims_Normal_61: 8041270546409234785
+      playerAnims_Normal_62: -3168223776723452982
+      playerAnims_Normal_63: 946675047866399084
+      playerAnims_Normal_64: 1367102842689442332
+      playerAnims_Normal_65: -7253591920715298768
+      playerAnims_Normal_66: -5121788124849636920
+      playerAnims_Normal_7: -4970240231840612534
+      playerAnims_Normal_8: 1887144663974683003
+      playerAnims_Normal_9: -1130103043787437807
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
