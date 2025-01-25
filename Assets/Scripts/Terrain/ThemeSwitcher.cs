@@ -9,11 +9,11 @@ public class ThemeManager : MonoBehaviour
         Medieval
     }
 
-    public Theme currentTheme;
+    public Theme currentTheme = Theme.Medieval;
 
     void Start()
     {
-        ApplyTheme(currentTheme);
+        ChangeTheme(currentTheme);
     }
 
     public void ApplyTheme(Theme theme)
