@@ -12,6 +12,7 @@ public class ToggleGameOverUI : MonoBehaviour
     private KeyCode toggleKey = KeyCode.UpArrow; // Jump to start game and remove UI text
 
     private bool isVisible = true;
+    private TMP_Text scoreText;
 
     void Start()
     {
@@ -19,6 +20,7 @@ public class ToggleGameOverUI : MonoBehaviour
 
     void Update()
     {
+        scoreText.text = ""+PlayerPrefs.GetInt("score");
         // If focus is on Input text 
         if (EventSystem.current.currentSelectedGameObject != null &&
             (EventSystem.current.currentSelectedGameObject.GetComponent<InputField>() != null ||
@@ -35,7 +37,7 @@ public class ToggleGameOverUI : MonoBehaviour
             // textsPanel.SetActive(isVisible);
             
             // Load the main scene
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Gilles");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("GameRelease");
         }
     }
 }

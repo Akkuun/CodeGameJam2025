@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     public float deathDistance = 12.5f;
     public int score;
+    private float floatScore;
     public int levelPosition = 0;
     private float floatDistance;
     public AudioSource explosionSource;
@@ -113,8 +114,10 @@ public class PlayerController : MonoBehaviour
         // Score 
         if (ScrollManager.instance != null)
         {
-            floatDistance += ScrollManager.instance.speed * Time.deltaTime;
-            score = Mathf.FloorToInt(floatDistance);
+            floatScore += ScrollManager.instance.speed * Time.deltaTime;
+            Debug.Log(floatScore);
+            ScrollManager.instance.score = Mathf.FloorToInt(floatScore);
+            score = Mathf.FloorToInt(floatScore);
         }
 
         //Debug.Log(isGrounded);
@@ -317,6 +320,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void triggerDeath() {
+        PlayerPrefs.SetInt("score", score);
         isDead = true;
         gameManager.gameState = GameState.GameOver;
         musicManager.StopAllCoroutines();
