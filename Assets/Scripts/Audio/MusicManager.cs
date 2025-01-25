@@ -132,7 +132,7 @@ public class MusicManager : MonoBehaviour
         }
     }
 
-    private void stopAll() {
+    public void stopAll() {
         for (int i = 0; i < 4; i++) {
             if (layersUnlocked[i] != MusicStyle.None) {
                 AudioSource[] audioSources = getAudioSourceFromStyle(layersUnlocked[i]);

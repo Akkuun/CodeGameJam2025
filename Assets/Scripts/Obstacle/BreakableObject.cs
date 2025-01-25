@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class Breakable : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+    [SerializeField] private AudioSource breakSound;
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         // V�rifie si l'objet en collision est le joueur
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
@@ -13,6 +14,7 @@ public class Breakable : MonoBehaviour
             if (player.isSliding)
             {
                 // D�truire l'objet si le joueur glisse
+                breakSound.Play();
                 Destroy(gameObject);
             }
             else

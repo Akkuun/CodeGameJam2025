@@ -19,7 +19,11 @@ public class PlayerController : MonoBehaviour
     public BoxCollider2D normalCollider; // Collider standard du personnage
     public bool isDead = false; // variable connue de tous pour savoir quand le joueur meurt
     public bool isSliding = false; // variable connue de tous pour savoir quand le joueur glisse
+    public AudioSource deathSFX; // Son de mort du joueur
+    public AudioSource jumpSFX; // Son de saut du joueur
+    public AudioSource doubleJumpSFX; // Son de double saut du joueur
     private ScrollManager gameManager;
+    private MusicManager musicManager;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -38,6 +42,7 @@ public class PlayerController : MonoBehaviour
         previousY[0] = transform.position.y;
         previousY[1] = float.MaxValue;
         gameManager = ScrollManager.instance;
+        musicManager = MusicManager.instance;
     }
 
     void Update()
@@ -75,6 +80,7 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, force); // Utilisation de rb.velocity pour appliquer la force du saut
         animator.SetTrigger("Jump");
         canDoubleJump = true; // Permet un double saut après un saut normal
+        jumpSFX.Play();
     }
 
     // Double saut
@@ -83,6 +89,7 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, force); // Applique la force du double saut
         animator.SetTrigger("DoubleJump");
         canDoubleJump = false; // Désactive le double saut après utilisation
+        doubleJumpSFX.Play();
     }
 
     private IEnumerator ResetScale(Vector3 originalScale, float delay)
@@ -178,7 +185,7 @@ public class PlayerController : MonoBehaviour
         BreakableObjectDetected = false; // Réinitialise la détection
 
         foreach (var hitCollider in hitColliders)
-        {
+        { 
             if (hitCollider != null && hitCollider.GetComponent<Breakable>() != null)
             {
                 // Si un objet de type Breakable est trouvé, on met à jour la variable
@@ -193,7 +200,7 @@ public class PlayerController : MonoBehaviour
     {
         if (gameObject.transform.position.x < -0.1)
         {
-            isDead = true;
+            triggerDeath();
         }
         if (isDead)
         {
@@ -210,4 +217,12 @@ public class PlayerController : MonoBehaviour
     
     
         }
+
+    public void triggerDeath() {
+        isDead = true;
+        gameManager.gameState = GameState.GameOver;
+        musicManager.StopAllCoroutines();
+        musicManager.stopAll();
+        deathSFX.Play();
+    }
 }

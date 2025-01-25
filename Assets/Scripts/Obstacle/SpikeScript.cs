@@ -11,7 +11,7 @@ public class SpikeScript : MonoBehaviour
         {
             // Passe la variable isDead � true si le joueur n'est pas en glissade
             Debug.Log($"Le joueur {collision.gameObject.name} est touch� par {gameObject.name}.");
-            player.isDead = true;
+            player.triggerDeath();
         }
     }
 }
