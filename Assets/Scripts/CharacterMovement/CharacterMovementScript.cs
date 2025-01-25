@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     public AudioSource jumpPadSFX; // Son du JumpPad
     private ScrollManager gameManager;
     private MusicManager musicManager;
+    public ParticleSystem deathEffect; // Effet de mort du joueur
+    public SpriteRenderer spriteRenderer; // Sprite du joueur
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -60,6 +62,17 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
+
+        if (isDead && deathEffect.isStopped)
+        {
+            gameManager.gameState = GameState.GameOver;
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Death Scene");
+        }
+
+        if (isDead)
+        {
+            return;
+        }
 
 //        Debug.Log(" Hello " + secondJumpForce);
         if (gameManager.gameState == GameState.Title || gameManager.gameState == GameState.GameOver)
@@ -293,5 +306,9 @@ public class PlayerController : MonoBehaviour
         musicManager.StopAllCoroutines();
         musicManager.stopAll();
         deathSFX.Play();
+        deathEffect.Play();
+        spriteRenderer.enabled = false;
+        // load scene
+        
     }
 }

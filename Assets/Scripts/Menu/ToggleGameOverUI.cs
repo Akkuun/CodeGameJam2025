@@ -9,14 +9,12 @@ using UnityEngine;
 public class ToggleGameOverUI : MonoBehaviour
 {
     [SerializeField] private GameObject textsPanel; 
-    [SerializeField] private ScrollManager gameManager;
     private KeyCode toggleKey = KeyCode.UpArrow; // Jump to start game and remove UI text
 
     private bool isVisible = true;
 
     void Start()
     {
-        gameManager = ScrollManager.instance;
     }
 
     void Update()
@@ -37,7 +35,7 @@ public class ToggleGameOverUI : MonoBehaviour
             // textsPanel.SetActive(isVisible);
             
             // Load the main scene
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Gilles");
         }
     }
 }
