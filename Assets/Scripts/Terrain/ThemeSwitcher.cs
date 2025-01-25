@@ -24,8 +24,10 @@ public class ThemeManager : MonoBehaviour
             {
                 string tag = t.ToString();
                 GameObject[] objectsToDisable = GameObject.FindGameObjectsWithTag(tag);
+                Debug.Log("Disabling objects with tag: " + tag);
                 foreach (GameObject obj in objectsToDisable)
                 {
+                    Debug.Log("Disabling " + obj.name);
                     obj.SetActive(false);
                 }
             }
@@ -33,8 +35,10 @@ public class ThemeManager : MonoBehaviour
 
         string currentTag = theme.ToString();
         GameObject[] objectsToEnable = GameObject.FindGameObjectsWithTag(currentTag);
+        Debug.Log("Enabling objects with tag: " + currentTag);
         foreach (GameObject obj in objectsToEnable)
         {
+            Debug.Log("Enabling " + obj.name);
             obj.SetActive(true);
         }
     }

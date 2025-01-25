@@ -53,18 +53,9 @@ public class DatabaseManager : MonoBehaviour
         }
 
         //TODO: Récupérer le score du joueur
-        int _score = 0;
+        int _score = PlayerPrefs.GetInt("score");
 
         GameObject playerObject = GameObject.FindWithTag("Player");
-
-        if (playerObject != null)
-        {
-            player = playerObject.GetComponent<PlayerController>();
-            if (player != null)
-            {
-                _score = ScrollManager.instance.score;
-            }
-        }
 
         //TODO: Récupérer les notes du joueur
         bool _note1 = false;
