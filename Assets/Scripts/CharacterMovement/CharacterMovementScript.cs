@@ -166,7 +166,7 @@ public class PlayerController : MonoBehaviour
     void UpdateGrounded()
     {
         RaycastHit2D[] raytab = new RaycastHit2D[1];
-        int t = normalCollider.Raycast(new Vector2(0, -1), raytab, 0.75f);
+        int t = normalCollider.Raycast(new Vector2(0, -1), raytab, 0.8f);
         isGrounded = t > 0 && !(raytab[0].collider.tag == "DoubleJumpObject");
 
 
