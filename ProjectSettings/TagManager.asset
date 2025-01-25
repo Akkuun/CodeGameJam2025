@@ -8,6 +8,9 @@ TagManager:
   - Ground
   - BreakableObject
   - DoubleJumpObject
+  - Modern
+  - Medieval
+  - Futuristic
   layers:
   - Default
   - TransparentFX
