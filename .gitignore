@@ -27,6 +27,11 @@
 .vs/
 .vscode/
 
+# Firebase plugin & key
+*FirebaseCppApp*
+*/google-services.json
+Assets/StreamingAssets/google-services.json
+
 # Gradle cache directory
 .gradle/
 

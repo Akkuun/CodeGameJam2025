@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Foreground
+  - Ground
+  - BreakableObject
+  - DoubleJumpObject
+  - Modern
+  - Medieval
+  - Futuristic
   layers:
   - Default
   - TransparentFX
@@ -38,14 +45,29 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Background
-    uniqueID: 3072508823
+  - name: Background0
+    uniqueID: 1821668567
+    locked: 0
+  - name: Background1
+    uniqueID: 2365504913
+    locked: 0
+  - name: Background2
+    uniqueID: 2072468217
+    locked: 0
+  - name: Background3
+    uniqueID: 3310434697
+    locked: 0
+  - name: Background4
+    uniqueID: 1789867823
+    locked: 0
+  - name: Ground
+    uniqueID: 2147778781
     locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Foreground
-    uniqueID: 2459717123
+    uniqueID: 1954471317
     locked: 0
   m_RenderingLayers:
   - Default
