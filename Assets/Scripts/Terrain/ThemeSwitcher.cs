@@ -44,4 +44,12 @@ public class ThemeManager : MonoBehaviour
         currentTheme = newTheme;
         ApplyTheme(currentTheme);
     }
+
+    public int getTheme()
+    {
+        if (currentTheme == Theme.Modern) return 0;
+        if (currentTheme == Theme.Medieval) return 1;
+        if (currentTheme == Theme.Futuristic) return 2;
+        return -1;
+    }
 }
