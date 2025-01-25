@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class Teleporter : MonoBehaviour
 {
-    [Header("Destination de téléportation")]
-    public Transform teleportDestination; // Point où le joueur sera téléporté
+    [Header("Destination de tï¿½lï¿½portation")]
+    public Transform teleportDestination; // Point oï¿½ le joueur sera tï¿½lï¿½portï¿½
     public ScrollManager scrollManager;
-    [Header("Effets et paramètres")]
-    public bool useTeleportEffect = false; // Active un effet visuel lors de la téléportation
-    public ParticleSystem teleportEffect; // Effet visuel de téléportation
+    [Header("Effets et paramï¿½tres")]
+    public bool useTeleportEffect = false; // Active un effet visuel lors de la tï¿½lï¿½portation
+    public ParticleSystem teleportEffect; // Effet visuel de tï¿½lï¿½portation
+    public NoteSpawner noteSpawner;
 
 
     void Start()
@@ -18,10 +19,10 @@ public class Teleporter : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Vérifie si l'objet entrant est le joueur
+        // Vï¿½rifie si l'objet entrant est le joueur
         if (collision.GetComponent<PlayerController>()!=null)
         {
-            // Téléportation
+            // Tï¿½lï¿½portation
             TeleportPlayer(collision.gameObject);
         }
     }
@@ -30,35 +31,36 @@ public class Teleporter : MonoBehaviour
     {
         if (teleportDestination == null)
         {
-            Debug.LogError("Aucune destination de téléportation définie !");
+            Debug.LogError("Aucune destination de tï¿½lï¿½portation dï¿½finie !");
             return;
         }
 
         // Sauvegarde l'ancienne position du joueur
         Vector3 oldPosition = player.transform.position;
 
-        // Si un effet de téléportation est activé
+        // Si un effet de tï¿½lï¿½portation est activï¿½
         if (useTeleportEffect && teleportEffect != null)
         {
-            Instantiate(teleportEffect, oldPosition, Quaternion.identity); // Effet avant la téléportation
+            Instantiate(teleportEffect, oldPosition, Quaternion.identity); // Effet avant la tï¿½lï¿½portation
         }
 
-        // Téléporte le joueur
+        // Tï¿½lï¿½porte le joueur
         //player.transform.position = teleportDestination.position;
 
         // Calcule l'offset (distance entre l'ancienne et la nouvelle position)
         float offset = teleportDestination.position.x - oldPosition.x;
 
-        // Ajuste les objets défilants via ScrollManager
+        // Ajuste les objets dï¿½filants via ScrollManager
         scrollManager.AdjustObjectsAfterTeleport(offset);
 
-        // Effet après la téléportation
+        // Effet aprï¿½s la tï¿½lï¿½portation
         if (useTeleportEffect && teleportEffect != null)
         {
             Instantiate(teleportEffect, teleportDestination.position, Quaternion.identity);
         }
-
-        Debug.Log($"Joueur téléporté à {teleportDestination.position} avec un décalage de {offset}");
+        noteSpawner.destroyNotes();
+        noteSpawner.spawnNote();
+        Debug.Log($"Joueur tï¿½lï¿½portï¿½ ï¿½ {teleportDestination.position} avec un dï¿½calage de {offset}");
     }
 
 }
