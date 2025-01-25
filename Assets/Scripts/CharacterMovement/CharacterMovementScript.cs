@@ -1,3 +1,5 @@
+
+
 using System;
 using System.Collections;
 using UnityEngine;
@@ -10,8 +12,8 @@ public class PlayerController : MonoBehaviour
     public AudioSource explosionSource;
 
     [Header("Mouvement du Personnage")]
-    public float jumpForce = 10f; // Force du saut
-    public float secondJumpForce = 8f; // Force du deuxième saut (si nécessaire, peut être différente)
+    public float jumpForce = 30f; // Force du saut
+    public float secondJumpForce = 30f; // Force du deuxième saut (si nécessaire, peut être différente)
     public float slideDuration = 1f; // Durée de la glissade
     public float breakableCheckRadius = 0.2f; // Rayon pour vérifier le sol
     public float objectDetectionDistance = 1f; // Distance horizontale de détection des objets
@@ -32,6 +34,9 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = false; // Indique si le personnage est au sol
     private bool BreakableObjectDetected = false; // Détection du bloc cassable
     private float[] previousY; // Position Y précédente du personnage
+    private bool isJumping = false; // Indique si le joueur est en train de sauter
+    private bool canSingleJump = false; // Indique si un saut simple est possible
+
 
     private bool canDoubleJump = false; // Indique si le joueur peut effectuer un double saut
 
@@ -46,8 +51,11 @@ public class PlayerController : MonoBehaviour
         levelPosition = 0;
     }
 
+    
     void Update()
     {
+
+        Debug.Log(" Hello " + secondJumpForce);
         if (gameManager.gameState == GameState.Title || gameManager.gameState == GameState.GameOver)
         {
             return;
@@ -57,19 +65,20 @@ public class PlayerController : MonoBehaviour
 
         CheckIfPlayerIsDead();
 
-        // Saut
-        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded && !isSliding)
-        {
-            Jump(jumpForce); // Saut normal
-            explosionSource.Play();
-        }
-        // Double saut
-        else if (Input.GetKeyDown(KeyCode.UpArrow) && !isGrounded && canDoubleJump && !isSliding)
-        {
-            DoubleJump(jumpForce); // Double saut
-        }
+        // Saut si flèche du haut + AU SOL + NE GLISSE PAS
 
-        // Glissade
+        //Double saut
+        if (Input.GetKeyDown(KeyCode.UpArrow) && !isGrounded && canDoubleJump && !isSliding)
+        {
+            Debug.Log(secondJumpForce); 
+            DoubleJump(secondJumpForce);
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded && !isSliding)
+        {
+            Jump(jumpForce);
+            //canSingleJump = false; // Désactive le saut simple jusqu'à ce que le joueur touche le sol
+        }
+        //// Glissade
         if (Input.GetKeyDown(KeyCode.DownArrow) && canSlide && !isSliding)
         {
             StartCoroutine(Slide());
@@ -80,22 +89,43 @@ public class PlayerController : MonoBehaviour
         {
             score = Mathf.FloorToInt(ScrollManager.instance.distanceScrolled);
         }
+
+        //Debug.Log(isGrounded);
+
+        
     }
 
     // Méthode de saut
     void Jump(float force)
     {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, force); // Utilisation de rb.velocity pour appliquer la force du saut
-        animator.SetTrigger("Jump");
-        canDoubleJump = true; // Permet un double saut après un saut normal
+        if (isGrounded)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, force); // Utilisation de rb.velocity pour appliquer la force du saut
+            animator.SetTrigger("Jump");
+        }
+
+        
     }
 
     // Double saut
     void DoubleJump(float force)
     {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, force); // Applique la force du double saut
-        animator.SetTrigger("DoubleJump");
-        canDoubleJump = false; // Désactive le double saut après utilisation
+
+        Debug.Log(force);
+        if (canDoubleJump)
+        {
+
+            //rb.AddForce(new Vector2(0, force - rb.linearVelocity.y), ForceMode2D.Impulse);
+            //Debug.Log(force);
+            //animator.SetTrigger("DoubleJump");
+            //canDoubleJump = false; // Désactive le double saut après utilisation
+            //rb.linearVelocity = new Vector2(0, 0);
+            rb.linearVelocity = new Vector2(0, force);
+
+            animator.SetTrigger("DoubleJump");
+            canDoubleJump = false;
+        }
+        
     }
 
     private IEnumerator ResetScale(Vector3 originalScale, float delay)
@@ -127,16 +157,28 @@ public class PlayerController : MonoBehaviour
 
     void UpdateGrounded()
     {
+        RaycastHit2D[] raytab = new RaycastHit2D[1];
+        int t = normalCollider.Raycast(new Vector2(0, -1), raytab, 1.2f/2f);
+        isGrounded = t > 0 && !(raytab[0].collider.tag == "DoubleJumpObject");
+
+
+
         // Vérifie si le personnage est en contact avec le sol
-        if (previousY[1] != float.MaxValue) isGrounded = Math.Abs(previousY[0] - transform.position.y) + Math.Abs(previousY[1] - transform.position.y) < 0.002f;
-        previousY[1] = previousY[0];
-        previousY[0] = transform.position.y;
+        //if (previousY[1] != float.MaxValue)
+        //{
+        //    isGrounded = Math.Abs(previousY[0] - transform.position.y) + Math.Abs(previousY[1] - transform.position.y) < 0.0000001d;
+        //}
+        //previousY[1] = previousY[0];
+        //previousY[0] = transform.position.y;
 
         // Si le personnage est au sol, on réactive le double saut
-        if (isGrounded)
-        {
-            canDoubleJump = false;
-        }
+        //if (isGrounded)
+        //{
+        //    // Réinitialise les sauts lorsqu'au sol
+        //    canSingleJump = true;
+        //    canDoubleJump = false;
+        //    isJumping = false;
+        //}
     }
 
     // Détection des objets cassables via le trigger
@@ -156,7 +198,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Détection de l'objet de double saut
-        if (collision.GetComponent<DoubleJumpObsttacle>() != null)
+        if (collision.tag == "DoubleJumpObject")
         {
             canDoubleJump = true;
         }
@@ -165,6 +207,12 @@ public class PlayerController : MonoBehaviour
         {
            
             ActivateJumpPad(25f); // Appliquer l'effet du JumpPad
+        }
+
+        if (normalCollider.IsTouching(collision) && collision.GetComponent<Ground>() != null)
+        {
+
+            isGrounded = true;
         }
 
     }
@@ -177,10 +225,16 @@ public class PlayerController : MonoBehaviour
         }
 
         // Réinitialise la possibilité de double saut lorsque le joueur quitte l'objet
-       if (normalCollider.IsTouching(collision) && collision.GetComponent<JumpingPadObject>() != null)
+        if (collision.tag == "DoubleJumpObject")
         {
             canDoubleJump = false;
         }
+
+        if (collision.GetComponent<DoubleJumpObsttacle>() != null)
+        {
+            canDoubleJump = false; // Désactive le double saut lorsque le joueur quitte l'objet
+        }
+
     }
 
     // Fonction qui met BreakableObjectDetected si un Breakable entre dans la box collider
@@ -215,7 +269,8 @@ public class PlayerController : MonoBehaviour
         // Applique une force verticale spécifique pour le JumpPad
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPadForce); // Utilisation de rb.velocity pour appliquer la force du saut
         animator.SetTrigger("Jump");
-        canDoubleJump = true; // Permet un double saut après un saut normal
+        //canDoubleJump = true; // Permet un double saut après un saut normal
+        Debug.Log("heh");
     
     
         }
